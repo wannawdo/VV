@@ -14,6 +14,10 @@
       {{currentUser.id}}
     </p>
     <p>
+      <strong>Name:</strong>
+      {{currentUser.name}}
+    </p>
+    <p>
       <strong>Email:</strong>
       {{currentUser.email}}
     </p>

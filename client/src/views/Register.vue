@@ -9,6 +9,20 @@
       <form name="form" @submit.prevent="handleRegister">
         <div v-if="!successful">
           <div class="form-group">
+            <label for="name">Name</label>
+            <input
+              v-model="user.name"
+              v-validate="'required|min:3|max:20'"
+              type="text"
+              class="form-control"
+              name="name"
+            />
+            <div
+              v-if="submitted && errors.has('username')"
+              class="alert-danger"
+            >{{errors.first('username')}}</div>
+          </div>
+          <div class="form-group">
             <label for="username">Username</label>
             <input
               v-model="user.username"
@@ -72,7 +86,7 @@ export default {
   name: 'Register',
   data() {
     return {
-      user: new User('', '', ''),
+      user: new User('','', '', ''),
       submitted: false,
       successful: false,
       message: ''

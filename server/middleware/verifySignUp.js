@@ -3,6 +3,19 @@ const ROLES = db.ROLES;
 const User = db.user;
 
 checkDuplicateUsernameOrEmail = (req, res, next) => {
+  // Name
+  User.findOne({
+    where: {
+      name: req.body.name
+    }
+  }).then(user => {
+    if (user) {
+      res.status(400).send({
+        message: "Failed! Name is already in use!"
+      });
+      return;
+    }
+
   // Username
   User.findOne({
     where: {
@@ -32,6 +45,7 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
       next();
     });
   });
+});
 };
 
 checkRolesExisted = (req, res, next) => {
