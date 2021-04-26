@@ -14,7 +14,7 @@ verifyToken = (req, res, next) => {
 
   jwt.verify(token, config.secret, (err, decoded) => {
     if (err) {
-      return res.status(401).send({
+      return res.status(401).send({   
         message: "Unauthorized!"
       });
     }
@@ -23,11 +23,11 @@ verifyToken = (req, res, next) => {
   });
 };
 
-isAdmin = (req, res, next) => {
+isAdministrator = (req, res, next) => {
   User.findByPk(req.userId).then(user => {
     user.getRoles().then(roles => {
       for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "admin") {
+        if (roles[i].name === "votant") {
           next();
           return;
         }
@@ -41,40 +41,40 @@ isAdmin = (req, res, next) => {
   });
 };
 
-isModerator = (req, res, next) => {
+isCandidat = (req, res, next) => {
   User.findByPk(req.userId).then(user => {
     user.getRoles().then(roles => {
       for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "moderator") {
+        if (roles[i].name === "candidat") {
           next();
           return;
         }
       }
 
       res.status(403).send({
-        message: "Require Moderator Role!"
+        message: "Require Candidat Role!"
       });
     });
   });
 };
 
-isModeratorOrAdmin = (req, res, next) => {
+isCandidatOrAdministrator = (req, res, next) => {
   User.findByPk(req.userId).then(user => {
     user.getRoles().then(roles => {
       for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "moderator") {
+        if (roles[i].name === "candidat") {
           next();
           return;
         }
 
-        if (roles[i].name === "admin") {
+        if (roles[i].name === "votant") {
           next();
           return;
         }
       }
 
       res.status(403).send({
-        message: "Require Moderator or Admin Role!"
+        message: "Require Candidat or Admin Role!"
       });
     });
   });
@@ -82,8 +82,8 @@ isModeratorOrAdmin = (req, res, next) => {
 
 const authJwt = {
   verifyToken: verifyToken,
-  isAdmin: isAdmin,
-  isModerator: isModerator,
-  isModeratorOrAdmin: isModeratorOrAdmin
+  isAdministrator: isAdministrator,
+  isCandidat: isCandidat,
+  isCandidatOrAdministrator: isCandidatOrAdministrator
 };
 module.exports = authJwt;

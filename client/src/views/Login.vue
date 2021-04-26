@@ -8,7 +8,7 @@
       />
       <form name="form" @submit.prevent="handleLogin">
         <div class="form-group">
-          <label for="username">Username</label>
+          <label for="username">Nume de ultilizator</label>
           <input
             v-model="user.username"
             v-validate="'required'"
@@ -23,7 +23,7 @@
           >Username is required!</div>
         </div>
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password">Parola</label>
           <input
             v-model="user.password"
             v-validate="'required'"
@@ -40,7 +40,7 @@
         <div class="form-group">
           <button class="btn btn-primary btn-block" :disabled="loading">
             <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-            <span>Login</span>
+            <span>Intră în cont</span>
           </button>
         </div>
         <div class="form-group">
@@ -134,5 +134,37 @@ label {
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
+  
+}
+.card-container{
+  background-color: #b3cde0;
+}
+input{
+border-radius: 25px;
+border: 2px solid #011f4b;
+padding: 20px;
+width: 100%;
+}
+button{
+border-radius: 25px;
+border: 2px solid #011f4b;
+padding: 20px;
+background-color: #011f4b;
+}
+img{
+border-radius: 25px;
+border: 2px solid #011f4b;
+}
+.cb{
+display: flex;
+justify-content: space-between;
+}
+
+.card-container{
+border-radius: 25px;
+border: 2px solid #011f4b;
+}
+.btn-primary {
+  margin-top: 15%;
 }
 </style>

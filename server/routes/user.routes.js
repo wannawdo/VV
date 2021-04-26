@@ -20,13 +20,13 @@ module.exports = function(app) {
 
   app.get(
     "/api/test/mod",
-    [authJwt.verifyToken, authJwt.isModerator],
-    controller.moderatorBoard
+    [authJwt.verifyToken, authJwt.isCandidat],
+    controller.CandidatBoard
   );
 
   app.get(
     "/api/test/admin",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    controller.adminBoard
+    [authJwt.verifyToken, authJwt.isAdministrator],
+    controller.administratorBoard
   );
 };

@@ -17,7 +17,7 @@ export default {
     };
   },
   mounted() {
-    UserService.getModeratorBoard().then(
+    UserService.getCandidatBoard().then(
       response => {
         this.content = response.data;
       },

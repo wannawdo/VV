@@ -6,10 +6,10 @@
         src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
         class="profile-img-card"
       />
-      <form name="form" @submit.prevent="handleRegister">
+      <form @submit.prevent="handleRegister" enctype="multipart/form-data" name="form">
         <div v-if="!successful">
           <div class="form-group">
-            <label for="name">Name</label>
+            <label for="name">Nume</label>
             <input
               v-model="user.name"
               v-validate="'required|min:3|max:20'"
@@ -23,7 +23,7 @@
             >{{errors.first('username')}}</div>
           </div>
           <div class="form-group">
-            <label for="username">Username</label>
+            <label for="username">Nume de utilizator</label>
             <input
               v-model="user.username"
               v-validate="'required|min:3|max:20'"
@@ -51,7 +51,7 @@
             >{{errors.first('email')}}</div>
           </div>
           <div class="form-group">
-            <label for="password">Password</label>
+            <label for="password">Parolă</label>
             <input
               v-model="user.password"
               v-validate="'required|min:6|max:40'"
@@ -64,15 +64,20 @@
               class="alert-danger"
             >{{errors.first('password')}}</div>
           </div>
-           <div class="checkbox">
-              <label>Doresc sa devin administrator: </label>
-              <input type="checkbox" value="apare cand dau click pe checkbox" />
+           <div class="cb">
+              <label class="adauga-cerere">Doresc sa devin administrator: </label>
+              <input class="checkbox" type="checkbox"/>
             </div>
-
-          <simple-upload />
-
+          <div class="field">
+        <label for="file" class="label"> Te rugăm să adaugi cererea aici:</label>
+        <input
+            type="file"
+            ref="file"
+            @change="selectFile"
+        />
+        </div>
           <div class="form-group">
-            <button class="btn btn-primary btn-block">Sign Up</button>
+            <button class="btn btn-primary btn-block">Creează cont</button>
           </div>
         </div>
       </form>
@@ -88,17 +93,18 @@
 
 <script>
 import User from '../models/user';
-import SimpleUpload from './SimpleUpload.vue';
+import axios from 'axios';
 
 export default {
   name: 'Register',
-  components: {SimpleUpload },
+  
   data() {
     return {
       user: new User('','', '', ''),
       submitted: false,
       successful: false,
-      message: ''
+      message: '',
+      file:''
     };
   },
   computed: {
@@ -112,16 +118,33 @@ export default {
     }
   },
   methods: {
+    selectFile(){
+            this.file=this.$refs.file.files[0];
+        },
+        // async sendFile(){
+        //     const formData=new FormData();
+        //     formData.append('file',this.file);
+        //     try{
+        //         await axios.post('/upload', formData);
+        //     }
+        //     catch(err){
+        //         console.log(err);
+        //     }
+        // },
     handleRegister() {
+      const formData=new FormData();
+      formData.append('file',this.file);
       this.message = '';
       this.submitted = true;
       this.$validator.validate().then(isValid => {
         if (isValid) {
+          
           this.$store.dispatch('auth/register', this.user).then(
-            data => {
+            (data) => {
               this.message = data.message;
+              axios.post('/upload', formData);
               this.successful = true;
-            },
+            },()=>{
             error => {
               this.message =
                 (error.response && error.response.data) ||
@@ -129,10 +152,12 @@ export default {
                 error.toString();
               this.successful = false;
             }
+            }
           );
         }
       });
     }
+
   }
   
 };
@@ -172,11 +197,39 @@ label {
   border-radius: 50%;
 }
 
-.checkbox input{
-  display: inline-block;
-  margin:10px;
+.field{
+  margin-bottom: 5%;
+  display:block;
+  width:100%
 }
-.checkbox label{
-  display: inline-block;
+.card-container{
+  background-color: #b3cde0;
+}
+input{
+border-radius: 25px;
+border: 2px solid #011f4b;
+padding: 20px;
+width: 100%;
+}
+button{
+border-radius: 25px;
+border: 2px solid #011f4b;
+padding: 20px;
+background-color: #011f4b;
+}
+img{
+border-radius: 25px;
+border: 2px solid #011f4b;
+}
+.cb{
+display: flex;
+justify-content: space-between;
+}
+.checkbox{
+  margin-top:10%;
+}
+.card-container{
+border-radius: 25px;
+border: 2px solid #011f4b;
 }
 </style>

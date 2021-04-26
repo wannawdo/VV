@@ -1,4 +1,4 @@
-# my-app
+# VV
 
 ## Project setup
 ```
