@@ -64,6 +64,13 @@
               class="alert-danger"
             >{{errors.first('password')}}</div>
           </div>
+           <div class="checkbox">
+              <label>Doresc sa devin administrator: </label>
+              <input type="checkbox" value="apare cand dau click pe checkbox" />
+            </div>
+
+          <simple-upload />
+
           <div class="form-group">
             <button class="btn btn-primary btn-block">Sign Up</button>
           </div>
@@ -81,9 +88,11 @@
 
 <script>
 import User from '../models/user';
+import SimpleUpload from './SimpleUpload.vue';
 
 export default {
   name: 'Register',
+  components: {SimpleUpload },
   data() {
     return {
       user: new User('','', '', ''),
@@ -125,6 +134,7 @@ export default {
       });
     }
   }
+  
 };
 </script>
 
@@ -160,5 +170,13 @@ label {
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
+}
+
+.checkbox input{
+  display: inline-block;
+  margin:10px;
+}
+.checkbox label{
+  display: inline-block;
 }
 </style>

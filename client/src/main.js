@@ -3,8 +3,10 @@ import App from './App.vue';
 import { router } from './router';
 import store from './store';
 import 'bootstrap';
+import axios from 'axios';
+import VueAxios from 'vue-axios'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import VeeValidate from 'vee-validate';
+import * as VeeValidate from 'vee-validate';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
@@ -18,7 +20,7 @@ import {
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 
 Vue.config.productionTip = false;
-
+Vue.use(VueAxios, axios);
 Vue.use(VeeValidate);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
