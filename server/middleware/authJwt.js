@@ -27,7 +27,7 @@ isAdministrator = (req, res, next) => {
   User.findByPk(req.userId).then(user => {
     user.getRoles().then(roles => {
       for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "votant") {
+        if (roles[i].name === "administrator") {
           next();
           return;
         }
@@ -58,32 +58,32 @@ isCandidat = (req, res, next) => {
   });
 };
 
-isCandidatOrAdministrator = (req, res, next) => {
-  User.findByPk(req.userId).then(user => {
-    user.getRoles().then(roles => {
-      for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "candidat") {
-          next();
-          return;
-        }
+// isCandidatOrAdministrator = (req, res, next) => {
+//   User.findByPk(req.userId).then(user => {
+//     user.getRoles().then(roles => {
+//       for (let i = 0; i < roles.length; i++) {
+//         if (roles[i].name === "candidat") {
+//           next();
+//           return;
+//         }
 
-        if (roles[i].name === "votant") {
-          next();
-          return;
-        }
-      }
+//         if (roles[i].name === "administrator") {
+//           next();
+//           return;
+//         }
+//       }
 
-      res.status(403).send({
-        message: "Require Candidat or Admin Role!"
-      });
-    });
-  });
-};
+//       res.status(403).send({
+//         message: "Require Candidat or Admin Role!"
+//       });
+//     });
+//   });
+// };
 
 const authJwt = {
   verifyToken: verifyToken,
   isAdministrator: isAdministrator,
   isCandidat: isCandidat,
-  isCandidatOrAdministrator: isCandidatOrAdministrator
+  //isCandidatOrAdministrator: isCandidatOrAdministrator
 };
 module.exports = authJwt;

@@ -15,7 +15,7 @@ export const router = new Router({
       component: Home
     },
     {
-      path: '/home',
+      path: '/acasa',
       component: Home
     },
     {
@@ -27,34 +27,46 @@ export const router = new Router({
       component: Register
     },
     {
-      path: '/profile',
+      path: '/profil',
       name: 'profile',
       // lazy-loaded
       component: () => import('./views/Profile.vue')
     },
     {
-      path: '/admin',
-      name: 'administrator',
+      path: '/gestionareconturi',
+      name: 'gestionareconturi',
       // lazy-loaded
-      component: () => import('./views/BoardAdmin.vue')
+      component: () => import('./views/GestionareConturi.vue')
     },
     {
-      path: '/mod',
-      name: 'candidat',
+      path: '/candidati',
+      name: 'candidati',
       // lazy-loaded
-      component: () => import('./views/BoardCandidat.vue')
+      component: () => import('./views/Candidati.vue')
     },
     {
-      path: '/user',
-      name: 'user',
+      path: '/vot',
+      name: 'vot',
       // lazy-loaded
-      component: () => import('./views/BoardUser.vue')
+      component: () => import('./views/Vote.vue')
+    },
+    {
+      path: '/candidatura',
+      name: 'candidatura',
+      // lazy-loaded
+      component: () => import('./views/Candidatura.vue')
+    },
+    {
+      path: '/sesiunivot',
+      name: 'sesiunivot',
+      // lazy-loaded
+      component: () => import('./views/VoteSessions.vue')
     }
   ]
 });
 
 router.beforeEach((to, from, next) => {
-    const publicPages = ['/login', '/register', '/home'];
+    const publicPages = ['/login', '/register', '/acasa'];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('user');
   

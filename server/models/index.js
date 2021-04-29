@@ -63,6 +63,6 @@ db.session.hasMany(db.application, { onDelete: "Cascade" });
 db.session.hasMany(db.result, { onDelete: "Cascade" });
 db.session.hasMany(db.vote, { onDelete: "Cascade" });
 
-db.ROLES = ["votant", "administrator", "candidat"];
+db.ROLES = ["votant", "candidat", "administrator"];
 
 module.exports = db;

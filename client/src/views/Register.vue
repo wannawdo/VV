@@ -114,7 +114,7 @@ export default {
   },
   mounted() {
     if (this.loggedIn) {
-      this.$router.push('/profile');
+      this.$router.push('/profil');
     }
   },
   methods: {
@@ -142,7 +142,7 @@ export default {
           this.$store.dispatch('auth/register', this.user).then(
             (data) => {
               this.message = data.message;
-              axios.post('/upload', formData);
+              axios.post('/register', formData);
               this.successful = true;
             },()=>{
             error => {

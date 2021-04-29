@@ -19,13 +19,13 @@ module.exports = function(app) {
   );
 
   app.get(
-    "/api/test/mod",
+    "/api/test/candidat",
     [authJwt.verifyToken, authJwt.isCandidat],
     controller.CandidatBoard
   );
 
   app.get(
-    "/api/test/admin",
+    "/api/test/administrator",
     [authJwt.verifyToken, authJwt.isAdministrator],
     controller.administratorBoard
   );

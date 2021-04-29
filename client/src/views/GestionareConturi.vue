@@ -10,14 +10,14 @@
 import UserService from '../services/user.service';
 
 export default {
-  name: 'User',
+  name: 'GestionareConturi',
   data() {
     return {
       content: ''
     };
   },
   mounted() {
-    UserService.getCandidatBoard().then(
+    UserService.getAdministratorBoard().then(
       response => {
         this.content = response.data;
       },

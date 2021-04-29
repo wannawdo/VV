@@ -4,18 +4,24 @@
       <a href class="navbar-brand" @click.prevent>VV</a>
       <div class="navbar-nav mr-auto">
         <li class="nav-item">
-          <router-link to="/home" class="nav-link">
+          <router-link to="/acasa" class="nav-link">
             <font-awesome-icon icon="home" />Acasă
           </router-link>
         </li>
-        <li v-if="showAdministratorBoard" class="nav-item">
-          <router-link to="/admin" class="nav-link">Administrator</router-link>
+          <li v-if="showAdministratorBoard" class="nav-item">
+          <router-link to="/gestionareconturi" class="nav-link">Gestionare Conturi</router-link>
         </li>
         <li v-if="showCandidatBoard" class="nav-item">
-          <router-link to="/mod" class="nav-link">Candidat</router-link>
+          <router-link to="/candidatura" class="nav-link">Candidatura</router-link>
         </li>
         <li class="nav-item">
-          <router-link v-if="currentUser" to="/user" class="nav-link">Sesiuni de vot</router-link>
+          <router-link v-if="currentUser" to="/sesiunivot" class="nav-link">Sesiuni de vot</router-link>
+        </li>
+         <li class="nav-item">
+          <router-link v-if="currentUser" to="/candidati" class="nav-link">Candidați</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link v-if="currentUser" to="/vot" class="nav-link">Votează</router-link>
         </li>
       </div>
 
@@ -34,7 +40,7 @@
 
       <div v-if="currentUser" class="navbar-nav ml-auto">
         <li class="nav-item">
-          <router-link to="/profile" class="nav-link">
+          <router-link to="/profil" class="nav-link">
             <font-awesome-icon icon="user" />
             {{ currentUser.username }}
           </router-link>

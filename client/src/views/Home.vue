@@ -1,8 +1,9 @@
 <template>
   <div class="container">
+    
     <header class="jumbotron">
       <h3>{{content}}</h3>
-
+      
     </header>
   </div>
 </template>
@@ -31,12 +32,13 @@ export default {
     );
   }
 };
+document.body.style='background: #f4f4f4'
 </script>
 <style scoped>
 .container{
   margin-top: 10%;
   border-radius: 15%;
-  background-color: #011f4b;
+  background-color: #141414;
   margin-bottom: 5%;
 }
 .jumbotron{

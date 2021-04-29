@@ -7,9 +7,9 @@ exports.allAccess = (req, res) => {
   };
   
   exports.administratorBoard = (req, res) => {
-    res.status(200).send("Admin Content.");
+    res.status(200).send("Gestionare conturi");
   };
   
   exports.CandidatBoard = (req, res) => {
-    res.status(200).send("Candidat Content.");
+    res.status(200).send("Candidatura");
   };
