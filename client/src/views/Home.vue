@@ -3,6 +3,8 @@
     
     <header class="jumbotron">
       <h3>{{content}}</h3>
+
+      <h3 v-if="!loggedIn"> Fa-ti cont</h3>
       
     </header>
   </div>
@@ -17,6 +19,11 @@ export default {
     return {
       content: ''
     };
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    }
   },
   mounted() {
     UserService.getPublicContent().then(

@@ -65,17 +65,19 @@
             >{{errors.first('password')}}</div>
           </div>
            <div class="cb">
-              <label class="adauga-cerere">Doresc sa devin administrator: </label>
-              <input class="checkbox" type="checkbox"/>
-            </div>
-          <div class="field">
-        <label for="file" class="label"> Te rugăm să adaugi cererea aici:</label>
-        <input
+              <label class="adauga-cerere" v-if="!checked">Doresc sa devin administrator: </label>
+              <input type="checkbox" id="checkbox" v-model="checked">
+              <label for="checkbox">
+          <div class="field" v-if="checked">
+              <label for="file" class="label"> Te rugăm să adaugi cererea aici:</label>
+          <input
             type="file"
             ref="file"
             @change="selectFile"
         />
         </div>
+        </label>
+            </div>
           <div class="form-group">
             <button class="btn btn-primary btn-block">Creează cont</button>
           </div>
@@ -104,6 +106,7 @@ export default {
       submitted: false,
       successful: false,
       message: '',
+      checked:false,
       file:''
     };
   },
@@ -221,13 +224,11 @@ img{
 border-radius: 25px;
 border: 2px solid #011f4b;
 }
-.cb{
+/* .cb{
 display: flex;
-justify-content: space-between;
-}
-.checkbox{
-  margin-top:10%;
-}
+justify-content:left;
+} */
+
 .card-container{
 border-radius: 25px;
 border: 2px solid #011f4b;

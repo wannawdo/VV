@@ -16,6 +16,7 @@
 
 
 export default {
+  
   name: 'Candidati',
   data() {
     return {
