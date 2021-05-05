@@ -67,14 +67,14 @@ export default {
     },
     showAdministratorBoard() {
       if (this.currentUser && this.currentUser.roles) {
-        return this.currentUser.roles.includes('administrator');
+        return this.currentUser.roles.includes('ROLE = ADMINISTRATOR');
       }
 
       return false;
     },
     showCandidatBoard() {
       if (this.currentUser && this.currentUser.roles) {
-        return this.currentUser.roles.includes('candidat');
+        return this.currentUser.roles.includes('ROLE = CANDIDAT');
       }
 
       return false;
