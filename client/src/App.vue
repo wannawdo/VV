@@ -8,20 +8,30 @@
             <font-awesome-icon icon="home" />Acasă
           </router-link>
         </li>
-          <li v-if="showAdministratorBoard" class="nav-item">
-          <router-link to="/gestionareconturi" class="nav-link">Gestionare Conturi</router-link>
+        <li v-if="showAdministratorBoard" class="nav-item">
+          <router-link to="/gestionareconturi" class="nav-link"
+            >Gestionare Conturi</router-link
+          >
         </li>
         <li v-if="showCandidatBoard" class="nav-item">
-          <router-link to="/candidatura" class="nav-link">Candidatura</router-link>
+          <router-link to="/candidatura" class="nav-link"
+            >Candidatura</router-link
+          >
         </li>
         <li class="nav-item">
-          <router-link v-if="currentUser" to="/sesiunivot" class="nav-link">Sesiuni de vot</router-link>
-        </li>
-         <li class="nav-item">
-          <router-link v-if="currentUser" to="/candidati" class="nav-link">Candidați</router-link>
+          <router-link v-if="currentUser" to="/sesiunivot" class="nav-link"
+            >Sesiuni de vot</router-link
+          >
         </li>
         <li class="nav-item">
-          <router-link v-if="currentUser" to="/vot" class="nav-link">Votează</router-link>
+          <router-link v-if="currentUser" to="/candidati" class="nav-link"
+            >Candidați</router-link
+          >
+        </li>
+        <li class="nav-item">
+          <router-link v-if="currentUser" to="/vot" class="nav-link"
+            >Votează</router-link
+          >
         </li>
       </div>
 
@@ -67,39 +77,38 @@ export default {
     },
     showAdministratorBoard() {
       if (this.currentUser && this.currentUser.roles) {
-        return this.currentUser.roles.includes('ROLE = ADMINISTRATOR');
+        return this.currentUser.roles.includes("ADMINISTRATOR");
       }
 
       return false;
     },
     showCandidatBoard() {
       if (this.currentUser && this.currentUser.roles) {
-        return this.currentUser.roles.includes('ROLE = CANDIDAT');
+        return this.currentUser.roles.includes("CANDIDAT");
       }
 
       return false;
-    }
+    },
   },
   methods: {
     logOut() {
-      this.$store.dispatch('auth/logout');
-      this.$router.push('/login');
-    }
-  }
+      this.$store.dispatch("auth/logout");
+      this.$router.push("/login");
+    },
+  },
 };
 </script>
 <style scoped>
 #app {
   background-color: #f4f4f4;
 }
-.navbar{
+.navbar {
   background-color: #011f4b;
 }
-svg{
-  margin-right:7px;
+svg {
+  margin-right: 7px;
 }
-.nav-item{
-  margin-right:10px;
+.nav-item {
+  margin-right: 10px;
 }
-
 </style>

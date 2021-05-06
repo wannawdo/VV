@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="col-md-6">
-      <h4>Lista cu utilizatorii</h4>
+      <h4 class="u-list">Lista cu utilizatorii</h4>
       <ul class="list-group">
         <li
           class="list-group-item"
@@ -34,21 +34,23 @@
       </ul>
     </div>
     <div class="col-md-6">
-      <div v-if="currentUser">
-        <h4>Utilizator curent</h4>
-        <div>
-          <label><strong>Nume:</strong></label> {{ currentUser.name }}
-        </div>
-        <div>
-          <label><strong>E-mail:</strong></label> {{ currentUser.email }}
-        </div>
-        <!-- <div>
+      <div class="col-md-6-1">
+        <div v-if="currentUser">
+          <h4>Utilizator selectat</h4>
+          <div>
+            <label><strong>Nume:</strong></label> {{ currentUser.name }}
+          </div>
+          <div>
+            <label><strong>E-mail:</strong></label> {{ currentUser.email }}
+          </div>
+          <!-- <div>
           <label><strong>Status:</strong></label> {{ currentUser.published ? "Published" : "Pending" }}
         </div> -->
-      </div>
-      <div v-else>
-        <br />
-        <p>Selectează un candidat...</p>
+        </div>
+        <div v-else>
+          <br />
+          <p class="select">Selectează un candidat...</p>
+        </div>
       </div>
     </div>
   </div>
@@ -127,7 +129,30 @@ export default {
   text-align: left;
   max-width: 750px;
   margin: auto;
-  margin-top: 10%;
+  margin-top: 5%;
   margin-bottom: 10%;
+}
+.col-md-6 {
+  margin-top: 5%;
+}
+.col-md-6-1 {
+  margin-top: 5%;
+  margin-left: 5%;
+  border-radius: 25px;
+  border: 2px solid #011f4b;
+  padding: 5%;
+  background-color: #b3cde0;
+}
+.u-list {
+  margin-bottom: 5%;
+  text-align: center;
+}
+.list-group {
+  border-radius: 25px;
+  border: 2px solid #011f4b;
+}
+select {
+  text-align: center;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 </style>

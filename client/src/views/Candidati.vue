@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="cartonase">
     <figure class="snip1336" v-for="candidat in candidati" :key="candidat.id">
       <img :src="candidat.poza" alt="sample87" />
       <figcaption>
@@ -40,6 +40,30 @@ export default {
         },
         {
           id: 3,
+          poza:
+            "https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg",
+          nume: "Gigel",
+          prenume: "Popescu",
+          descriere: "test tdsddsetsttt testt",
+        },
+        {
+          id: 4,
+          poza:
+            "https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg",
+          nume: "Ionel",
+          prenume: "Popescu",
+          descriere: "test tetsttt testt",
+        },
+        {
+          id: 5,
+          poza:
+            "https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg",
+          nume: "fdssfddl",
+          prenume: "Podfsdfdscu",
+          descriere: "test tetdfsddfddsft",
+        },
+        {
+          id: 6,
           poza:
             "https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg",
           nume: "Gigel",
@@ -152,6 +176,10 @@ body {
 figure {
   border-radius: 25px;
   border: 2px solid #011f4b;
-  margin-top: 15%;
+  margin-right: 15%;
+}
+.cartonase {
+  margin-top: 5%;
+  text-align: center;
 }
 </style>
