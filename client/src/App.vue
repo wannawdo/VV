@@ -104,6 +104,8 @@ export default {
 }
 .navbar {
   background-color: #011f4b;
+  margin-bottom: 2%;
+  box-shadow: 5px 7px 5px #b3cde0;
 }
 svg {
   margin-right: 7px;

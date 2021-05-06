@@ -145,6 +145,7 @@ body {
 figure {
   border-radius: 25px;
   border: 2px solid #011f4b;
+  box-shadow: 5px 10px 10px #011f4b;
 }
 .cartonase {
   margin-top: 5%;
@@ -156,8 +157,10 @@ figure {
   border: 2px solid #011f4b;
   margin-top: 5%;
   background-color: #b3cde0;
+  box-shadow: 5px 5px 10px #011f4b;
 }
 .info {
   text-align: center;
+  text-shadow: 1px 1px;
 }
 </style>
