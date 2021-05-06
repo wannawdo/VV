@@ -5,7 +5,7 @@ const cors = require("cors");
 const app = express();
 
 var corsOptions = {
-  origin: "http://localhost:8081"
+  origin: "http://localhost:8081",
 };
 
 const db = require("./models");
@@ -31,6 +31,9 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to vote application." });
 });
 
+require("./routes/administrator.routes")(app);
+require("./routes/vote.sessions.routes")(app);
+
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
@@ -38,23 +41,22 @@ app.listen(PORT, () => {
 });
 
 // routes
-require('./routes/auth.routes')(app);
-require('./routes/user.routes')(app);
-
+require("./routes/auth.routes")(app);
+require("./routes/user.routes")(app);
 
 function initial() {
   Role.create({
     id: 1,
-    name: "votant"
+    name: "votant",
   });
- 
+
   Role.create({
     id: 2,
-    name: "candidat"
+    name: "candidat",
   });
- 
+
   Role.create({
     id: 3,
-    name: "administrator"
+    name: "administrator",
   });
 }

@@ -1,37 +1,62 @@
 <template>
-  <figure class="snip1336">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg" alt="sample87" />
-  <figcaption>
-    <!--<img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg" alt="profile-sample4" class="profile" />-->
-    <h2>Nume candidat<span>Prenume candidat</span></h2>
-    <p>Descrierea pe care o introduce candidatul </p>
-    <a href="#" class="follow">Follow</a>
-    <a href="#" class="info">More Info</a>
-  </figcaption>
-  </figure>
-  
+  <div>
+    <figure class="snip1336" v-for="candidat in candidati" :key="candidat.id">
+      <img :src="candidat.poza" alt="sample87" />
+      <figcaption>
+        <!--<img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg" alt="profile-sample4" class="profile" />-->
+        <h2>
+          {{ candidat.nume }}<span>{{ candidat.prenume }}</span>
+        </h2>
+        <p>{{ candidat.descriere }}</p>
+        <a href="#" class="follow">Follow</a>
+        <a href="#" class="info">More Info</a>
+      </figcaption>
+    </figure>
+  </div>
 </template>
 
 <script>
-
-
 export default {
-  
-  name: 'Candidati',
+  name: "Candidati",
   data() {
     return {
-      content: ''
+      content: "",
+      candidati: [
+        {
+          id: 1,
+          poza:
+            "https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg",
+          nume: "Ionel",
+          prenume: "Popescu",
+          descriere: "test tetsttt testt",
+        },
+        {
+          id: 2,
+          poza:
+            "https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg",
+          nume: "fdssfddl",
+          prenume: "Podfsdfdscu",
+          descriere: "test tetdfsddfddsft",
+        },
+        {
+          id: 3,
+          poza:
+            "https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg",
+          nume: "Gigel",
+          prenume: "Popescu",
+          descriere: "test tdsddsetsttt testt",
+        },
+      ],
     };
   },
-  mounted() {
-  }
+  mounted() {},
 };
 </script>
 
 <style scoped>
-@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,600);
+@import url("https://fonts.googleapis.com/css?family=Roboto:300, 400, 600");
 .snip1336 {
-  font-family: 'Roboto', Arial, sans-serif;
+  font-family: "Roboto", Arial, sans-serif;
   position: relative;
   float: left;
   overflow: hidden;
@@ -63,7 +88,7 @@ export default {
 }
 .snip1336 figcaption:before {
   position: absolute;
-  content: '';
+  content: "";
   bottom: 100%;
   left: 0;
   width: 0;
@@ -124,9 +149,9 @@ export default {
 body {
   background-color: #212121;
 }
-figure{
-border-radius: 25px;
-border: 2px solid #011f4b;
-margin-top: 15%;
+figure {
+  border-radius: 25px;
+  border: 2px solid #011f4b;
+  margin-top: 15%;
 }
 </style>

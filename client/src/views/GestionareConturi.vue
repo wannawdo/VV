@@ -1,33 +1,133 @@
 <template>
-  <div class="container">
-    <header class="jumbotron">
-      <h3>{{content}}</h3>
-    </header>
+  <div class="list row">
+    <div class="col-md-8">
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Caută după nume"
+          v-model="name"
+        />
+        <div class="input-group-append">
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            @click="searchName"
+          >
+            Caută
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4>Lista cu utilizatorii</h4>
+      <ul class="list-group">
+        <li
+          class="list-group-item"
+          :class="{ active: index == currentIndex }"
+          v-for="(user, index) in users"
+          :key="index"
+          @click="setActiveUser(user, index)"
+        >
+          {{ user.name }}
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <div v-if="currentUser">
+        <h4>Utilizator curent</h4>
+        <div>
+          <label><strong>Nume:</strong></label> {{ currentUser.name }}
+        </div>
+        <div>
+          <label><strong>E-mail:</strong></label> {{ currentUser.email }}
+        </div>
+        <!-- <div>
+          <label><strong>Status:</strong></label> {{ currentUser.published ? "Published" : "Pending" }}
+        </div> -->
+      </div>
+      <div v-else>
+        <br />
+        <p>Selectează un candidat...</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import UserService from '../services/user.service';
+import UserService from "../services/user.service";
+import AdministratorService from "../services/administrator.service";
 
 export default {
-  name: 'GestionareConturi',
+  name: "GestionareConturi",
   data() {
     return {
-      content: ''
+      users: [],
+      currentUser: null,
+      currentIndex: -1,
+      name: "",
     };
   },
+  methods: {
+    retrieveUsers() {
+      AdministratorService.getAll()
+        .then((response) => {
+          this.users = response.data;
+          console.log(response.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+
+    refreshList() {
+      this.retrieveUsers();
+      this.currentUser = null;
+      this.currentIndex = -1;
+    },
+
+    setActiveUser(user, index) {
+      this.currentUser = { ...user };
+      this.currentIndex = index;
+    },
+    searchName() {
+      AdministratorService.findAllByCondition(this.name)
+        .then((response) => {
+          this.users = response.data;
+          console.log(response.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+  },
   mounted() {
+    this.retrieveUsers();
     UserService.getAdministratorBoard().then(
-      response => {
+      (response) => {
         this.content = response.data;
       },
-      error => {
+      (error) => {
         this.content =
           (error.response && error.response.data) ||
           error.message ||
           error.toString();
       }
     );
-  }
+  },
+  //  computed: {
+  //   currentUser() {
+  //     return this.$store.state.auth.user;
+  //   }
+  // }
 };
 </script>
+<style>
+.list {
+  text-align: left;
+  max-width: 750px;
+  margin: auto;
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+</style>
