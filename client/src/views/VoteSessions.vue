@@ -1,7 +1,7 @@
 <template>
   <div class="poll-view">
     <div class="poll-view__title">
-      New poll
+      Sesiune nouă de vot
     </div>
     <div class="poll-view__inner">
       <div class="poll-view__question">
@@ -24,12 +24,12 @@
             v-model="poll.answers[index].answer"
             type="text"
           />
-          <span class="delete" @click="deleteInput(index)">delete</span>
+          <span class="delete" @click="deleteInput(index)">șterge opțiune</span>
         </div>
       </div>
       <div class="poll-view__options">
         <label class="checkbox"
-          >Allow multiple votes
+          >Permite bifarea a mai multor rezultate
           <input
             v-model="poll.multipleVotes"
             type="checkbox"
@@ -39,7 +39,7 @@
         </label>
       </div>
       <div class="poll-view__submit">
-        <button @click="createPoll">Create</button>
+        <button @click="createPoll">Creează sesiunea de vot</button>
       </div>
       <div
         class="poll-view__info"
@@ -74,11 +74,11 @@ export default {
   data() {
     return {
       poll: {
-        question: "How old are you?",
+        question: "Pune aici întrebarea",
         answers: [
-          { answer: "10-20" },
-          { answer: "21-30" },
-          { answer: "31-40" },
+          { answer: "Răspuns 1" },
+          { answer: "Răspuns 2" },
+          { answer: "Răspuns 3" },
           { answer: "" },
         ],
         multipleVotes: false,

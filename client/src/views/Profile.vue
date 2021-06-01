@@ -187,10 +187,9 @@ figure {
   }
 }
 .jumbotronn {
-  animation: zoominoutsinglefeatured 3s infinite;
+  animation: zoominoutsinglefeatured 7s;
   border-radius: 25px;
   border: 2px solid #011f4b;
-
   background-color: #b3cde0;
   box-shadow: 5px 5px 10px #011f4b;
   width: 60%;

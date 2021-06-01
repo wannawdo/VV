@@ -7,11 +7,11 @@
         <h3 v-if="!loggedIn">Te rugăm să intri în cont pentru a continua.</h3>
       </header>
     </div>
-    <img
+    <!-- <img
       src="https://www.indianfolk.com/wp-content/uploads/2019/03/evoting_1200.jpg"
       alt="profile-sample4"
       class="vote"
-    />
+    /> -->
 
     <div id="app">
       <div class="slider">
@@ -165,7 +165,7 @@ document.body.style = "background: #f4f4f4";
   border-radius: 15%;
   background-color: #141414;
   box-shadow: 5px 10px 10px #011f4b;
-  animation: zoominoutsinglefeatured 5s infinite;
+  animation: zoominoutsinglefeatured 5s;
 }
 @keyframes zoominoutsinglefeatured {
   0% {
@@ -192,7 +192,7 @@ document.body.style = "background: #f4f4f4";
     background-color: #b3cde9;
   }
   50% {
-    background-color: #b3cfff;
+    background-color: #b3dfff;
   }
   100% {
     background-color: #b3cde7;
@@ -209,9 +209,17 @@ h3 {
 
 .slider {
   position: relative;
+  margin: auto;
   z-index: 1;
   overflow: hidden;
-  height: 100vh;
+  height: 500px;
+  width: 1000px;
+}
+.app {
+  height: 500px;
+  widows: 1000px;
+  background-color: #141414;
+  margin: auto;
 }
 .slider ul {
   list-style: none;
@@ -308,5 +316,9 @@ h3 {
   height: 11px;
   background: #fff;
   border-radius: 50%;
+}
+.homepage {
+  height: 100%;
+  width: 100%;
 }
 </style>

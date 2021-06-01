@@ -3,8 +3,8 @@
     <div class="poll-view__title" v-html="poll.question"></div>
     <div v-if="!result" class="poll-view__inner">
       <div class="poll-view__help">
-        <span v-if="poll.multipleVotes">Choose many answers:</span>
-        <span v-else>Choose one answer:</span>
+        <span v-if="poll.multipleVotes">Alege mai multe răspunsuri:</span>
+        <span v-else>Alege un singur răspuns:</span>
       </div>
       <div class="poll-view__votes">
         <div
@@ -24,15 +24,17 @@
         </div>
       </div>
       <div class="poll-view__submit">
-        <button @click="vote">Vote</button>
+        <button @click="vote">Votează</button>
       </div>
       <div
         class="poll-view__info"
         :class="{ success: success === true, error: success === false }"
         v-if="success !== null"
       >
-        <div v-if="success === true">Voted</div>
-        <div v-if="success === false">Error</div>
+        <div v-if="success === true">Felicitări! Ai votat!</div>
+        <div v-if="success === false">
+          Eroare! Votul nu a putut fi înregistrat!
+        </div>
       </div>
     </div>
     <div v-if="result" class="poll-view__results">
@@ -44,7 +46,7 @@
         <div class="title">
           {{ answer.answer }}
           <span class="percent">{{ calculatePercent(answer.votes) }}% </span>
-          <span class="votes">({{ answer.votes }} votes)</span>
+          <span class="votes">({{ answer.votes }} voturi)</span>
         </div>
         <div class="bar">
           <div :style="{ width: calculatePercent(answer.votes) + '%' }"></div>
@@ -79,15 +81,11 @@ export default {
     return {
       poll: {
         id: 1,
-        question: "What is your favourite <strong>PHP</strong> framework?",
+        question: "Validezi <strong>președintele</strong> ?",
         answers: [
-          { id: 1, answer: "Laravel", votes: 14021 },
-          { id: 2, answer: "Symfony", votes: 3210 },
-          { id: 3, answer: "Phalcon", votes: 3231 },
-          { id: 4, answer: "FuelPhp", votes: 2004 },
-          { id: 5, answer: "Zend Framework", votes: 3132 },
-          { id: 6, answer: "PHPixie", votes: 2131 },
-          { id: 7, answer: "CakePHP", votes: 1222 },
+          { id: 1, answer: "Da", votes: 14021 },
+          { id: 2, answer: "Nu", votes: 3210 },
+          { id: 3, answer: "Abținere", votes: 3231 },
         ],
         multipleVotes: true,
       },

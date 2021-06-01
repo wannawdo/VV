@@ -66,15 +66,15 @@
     <div class="container">
       <router-view />
     </div>
-    <div><Footer /></div>
+    <!-- <Footer /> -->
   </div>
 </template>
 
 <script>
-import Footer from "./views/Footer.vue";
+//import Footer from "./views/Footer.vue";
 
 export default {
-  components: { Footer },
+  // components: { Footer },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;

@@ -95,6 +95,7 @@ button {
 .btnnn {
   width: 50%;
   margin: auto;
+  box-shadow: 3px 3px 5px #03396c;
 }
 .butonas {
   align-content: center;
@@ -117,7 +118,7 @@ button {
   }
 }
 .jumbotronn {
-  animation: zoominoutsinglefeatured 3s infinite;
+  animation: zoominoutsinglefeatured 7s;
   border-radius: 25px;
   border: 2px solid #011f4b;
   margin-top: 5%;
@@ -128,5 +129,10 @@ button {
 .info {
   text-align: center;
   text-shadow: 1px 1px;
+}
+.quill-editor {
+  border-radius: 7px;
+  border: 2px solid #011f4b;
+  box-shadow: 5px 5px 7px #011f4b;
 }
 </style>

@@ -201,7 +201,7 @@ figure {
   }
 }
 .jumbotronn {
-  animation: zoominoutsinglefeatured 3s infinite;
+  animation: zoominoutsinglefeatured 7s;
   border-radius: 25px;
   border: 2px solid #011f4b;
   margin-top: 5%;
@@ -215,7 +215,7 @@ figure {
 }
 .cand {
   margin-top: 5%;
-
+  justify-content: center;
   display: flex;
   flex-wrap: wrap;
   align-content: center;
