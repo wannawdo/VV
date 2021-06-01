@@ -1,17 +1,23 @@
 <template>
   <div class="cartonase">
-    <figure class="snip1336" v-for="candidat in candidati" :key="candidat.id">
-      <img :src="candidat.poza" alt="sample87" />
-      <figcaption>
-        <!--<img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg" alt="profile-sample4" class="profile" />-->
-        <h2>
-          {{ candidat.nume }}<span>{{ candidat.prenume }}</span>
-        </h2>
-        <p>{{ candidat.descriere }}</p>
-        <a href="#" class="follow">Follow</a>
-        <a href="#" class="info">More Info</a>
-      </figcaption>
-    </figure>
+    <header class="jumbotronn">
+      <h3 class="info">
+        Candidați
+      </h3>
+    </header>
+    <div class="cand">
+      <figure class="snip1336" v-for="candidat in candidati" :key="candidat.id">
+        <img :src="candidat.poza" alt="sample87" />
+        <figcaption>
+          <!--<img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg" alt="profile-sample4" class="profile" />-->
+          <h2>
+            {{ candidat.nume }}<span>{{ candidat.prenume }}</span>
+          </h2>
+          <p>{{ candidat.descriere }}</p>
+          <a href="#" class="follow">Follow</a>
+        </figcaption>
+      </figure>
+    </div>
   </div>
 </template>
 
@@ -25,7 +31,7 @@ export default {
         {
           id: 1,
           poza:
-            "https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg",
+            "https://qph.fs.quoracdn.net/main-qimg-5004d88d80aa37fedeafaef8be2d8cf4",
           nume: "Ionel",
           prenume: "Popescu",
           descriere: "test tetsttt testt",
@@ -33,7 +39,7 @@ export default {
         {
           id: 2,
           poza:
-            "https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg",
+            "https://qph.fs.quoracdn.net/main-qimg-5004d88d80aa37fedeafaef8be2d8cf4",
           nume: "fdssfddl",
           prenume: "Podfsdfdscu",
           descriere: "test tetdfsddfddsft",
@@ -41,7 +47,7 @@ export default {
         {
           id: 3,
           poza:
-            "https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg",
+            "https://qph.fs.quoracdn.net/main-qimg-5004d88d80aa37fedeafaef8be2d8cf4",
           nume: "Gigel",
           prenume: "Popescu",
           descriere: "test tdsddsetsttt testt",
@@ -92,6 +98,7 @@ export default {
   text-align: left;
   line-height: 1.4em;
   background-color: #141414;
+  box-shadow: 5px 5px 10px #011f4b;
 }
 .snip1336 * {
   -webkit-box-sizing: border-box;
@@ -176,10 +183,46 @@ body {
 figure {
   border-radius: 25px;
   border: 2px solid #011f4b;
-  margin-right: 15%;
 }
 .cartonase {
   margin-top: 5%;
   text-align: center;
+  margin-bottom: 10%;
+}
+@keyframes zoominoutsinglefeatured {
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.1, 1.1);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+.jumbotronn {
+  animation: zoominoutsinglefeatured 3s infinite;
+  border-radius: 25px;
+  border: 2px solid #011f4b;
+  margin-top: 5%;
+  background-color: #b3cde0;
+  box-shadow: 5px 5px 10px #011f4b;
+}
+
+.info {
+  text-align: center;
+  text-shadow: 1px 1px;
+}
+.cand {
+  margin-top: 5%;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+}
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
 }
 </style>

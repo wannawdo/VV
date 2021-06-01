@@ -6,10 +6,14 @@
         src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
         class="profile-img-card"
       />
-      <form @submit.prevent="handleRegister" enctype="multipart/form-data" name="form">
+      <form
+        @submit.prevent="handleRegister"
+        enctype="multipart/form-data"
+        name="form"
+      >
         <div v-if="!successful">
           <div class="form-group">
-            <label for="name">Nume</label>
+            <label for="name"><strong>Nume</strong></label>
             <input
               v-model="user.name"
               v-validate="'required|min:3|max:20'"
@@ -20,10 +24,12 @@
             <div
               v-if="submitted && errors.has('username')"
               class="alert-danger"
-            >{{errors.first('username')}}</div>
+            >
+              {{ errors.first("username") }}
+            </div>
           </div>
           <div class="form-group">
-            <label for="username">Nume de utilizator</label>
+            <label for="username"><strong>Nume de utilizator</strong></label>
             <input
               v-model="user.username"
               v-validate="'required|min:3|max:20'"
@@ -34,10 +40,12 @@
             <div
               v-if="submitted && errors.has('username')"
               class="alert-danger"
-            >{{errors.first('username')}}</div>
+            >
+              {{ errors.first("username") }}
+            </div>
           </div>
           <div class="form-group">
-            <label for="email">Email</label>
+            <label for="email"><strong>Email</strong></label>
             <input
               v-model="user.email"
               v-validate="'required|email|max:50'"
@@ -45,13 +53,12 @@
               class="form-control"
               name="email"
             />
-            <div
-              v-if="submitted && errors.has('email')"
-              class="alert-danger"
-            >{{errors.first('email')}}</div>
+            <div v-if="submitted && errors.has('email')" class="alert-danger">
+              {{ errors.first("email") }}
+            </div>
           </div>
           <div class="form-group">
-            <label for="password">Parolă</label>
+            <label for="password"><strong>Parolă</strong></label>
             <input
               v-model="user.password"
               v-validate="'required|min:6|max:40'"
@@ -62,24 +69,28 @@
             <div
               v-if="submitted && errors.has('password')"
               class="alert-danger"
-            >{{errors.first('password')}}</div>
-          </div>
-           <div class="cb">
-              <label class="adauga-cerere" v-if="!checked">Doresc sa devin administrator: </label>
-              <input type="checkbox" id="checkbox" v-model="checked">
-              <label for="checkbox">
-          <div class="field" v-if="checked">
-              <label for="file" class="label"> Te rugăm să adaugi cererea aici:</label>
-          <input
-            type="file"
-            ref="file"
-            @change="selectFile"
-        />
-        </div>
-        </label>
+            >
+              {{ errors.first("password") }}
             </div>
+          </div>
+          <div class="cb">
+            <label class="adauga-cerere" v-if="!checked"
+              ><strong>Doresc sa devin administrator:</strong>
+            </label>
+            <input type="checkbox" id="checkbox" v-model="checked" />
+            <label for="checkbox">
+              <div class="field" v-if="checked">
+                <label for="file" class="label">
+                  <strong>Te rugăm să adaugi cererea aici:</strong></label
+                >
+                <input type="file" ref="file" @change="selectFile" />
+              </div>
+            </label>
+          </div>
           <div class="form-group">
-            <button class="btn btn-primary btn-block">Creează cont</button>
+            <button class="btn btn-primary btn-block">
+              <strong>Creează cont</strong>
+            </button>
           </div>
         </div>
       </form>
@@ -88,81 +99,81 @@
         v-if="message"
         class="alert"
         :class="successful ? 'alert-success' : 'alert-danger'"
-      >{{message}}</div>
+      >
+        {{ message }}
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import User from '../models/user';
-import axios from 'axios';
+import User from "../models/user";
+import axios from "axios";
 
 export default {
-  name: 'Register',
-  
+  name: "Register",
+
   data() {
     return {
-      user: new User('','', '', ''),
+      user: new User("", "", "", ""),
       submitted: false,
       successful: false,
-      message: '',
-      checked:false,
-      file:''
+      message: "",
+      checked: false,
+      file: "",
     };
   },
   computed: {
     loggedIn() {
       return this.$store.state.auth.status.loggedIn;
-    }
+    },
   },
   mounted() {
     if (this.loggedIn) {
-      this.$router.push('/profil');
+      this.$router.push("/profil");
     }
   },
   methods: {
-    selectFile(){
-            this.file=this.$refs.file.files[0];
-        },
-        // async sendFile(){
-        //     const formData=new FormData();
-        //     formData.append('file',this.file);
-        //     try{
-        //         await axios.post('/upload', formData);
-        //     }
-        //     catch(err){
-        //         console.log(err);
-        //     }
-        // },
+    selectFile() {
+      this.file = this.$refs.file.files[0];
+    },
+    // async sendFile(){
+    //     const formData=new FormData();
+    //     formData.append('file',this.file);
+    //     try{
+    //         await axios.post('/upload', formData);
+    //     }
+    //     catch(err){
+    //         console.log(err);
+    //     }
+    // },
     handleRegister() {
-      const formData=new FormData();
-      formData.append('file',this.file);
-      this.message = '';
+      const formData = new FormData();
+      formData.append("file", this.file);
+      this.message = "";
       this.submitted = true;
-      this.$validator.validate().then(isValid => {
+      this.$validator.validate().then((isValid) => {
         if (isValid) {
-          
-          this.$store.dispatch('auth/register', this.user).then(
+          this.$store.dispatch("auth/register", this.user).then(
             (data) => {
               this.message = data.message;
-              axios.post('/register', formData);
+              axios.post("/register", formData);
               this.successful = true;
-            },()=>{
-            error => {
-              this.message =
-                (error.response && error.response.data) ||
-                error.message ||
-                error.toString();
-              this.successful = false;
-            }
+            },
+            () => {
+              (error) => {
+                this.message =
+                  (error.response && error.response.data) ||
+                  error.message ||
+                  error.toString();
+                this.successful = false;
+              };
             }
           );
         }
       });
-    }
-
-  }
-  
+    },
+  },
 };
 </script>
 
@@ -200,37 +211,38 @@ label {
   border-radius: 50%;
 }
 
-.field{
+.field {
   margin-bottom: 5%;
-  display:block;
-  width:100%
+  display: block;
+  width: 100%;
 }
-.card-container{
+.card-container {
   background-color: #b3cde0;
 }
-input{
-border-radius: 25px;
-border: 2px solid #011f4b;
-padding: 20px;
-width: 100%;
+input {
+  border-radius: 25px;
+  border: 2px solid #011f4b;
+  padding: 20px;
+  width: 100%;
 }
-button{
-border-radius: 25px;
-border: 2px solid #011f4b;
-padding: 20px;
-background-color: #011f4b;
+button {
+  border-radius: 25px;
+  border: 2px solid #011f4b;
+  padding: 20px;
+  background-color: #011f4b;
 }
-img{
-border-radius: 25px;
-border: 2px solid #011f4b;
+img {
+  border-radius: 25px;
+  border: 2px solid #011f4b;
 }
 /* .cb{
 display: flex;
 justify-content:left;
 } */
 
-.card-container{
-border-radius: 25px;
-border: 2px solid #011f4b;
+.card-container {
+  border-radius: 25px;
+  border: 2px solid #011f4b;
+  box-shadow: 7px 10px 10px #011f4b;
 }
 </style>

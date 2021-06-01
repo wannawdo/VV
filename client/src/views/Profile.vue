@@ -1,6 +1,6 @@
 <template>
   <div class="pagina-profil">
-    <header class="jumbotron">
+    <header class="jumbotronn">
       <h3 class="info">
         Informații despre cont
       </h3>
@@ -19,8 +19,25 @@
             }}<span>Username: {{ currentUser.username }}</span>
           </h2>
           <p>E-mail: {{ currentUser.email }}</p>
-          <a href="#" class="follow">Editează cont</a>
-          <a href="#" class="info">Șterge cont</a>
+          <div class="options">
+            <a href="#" class="follow">Editează cont</a>
+            <a href="#" class="follow">Șterge cont</a>
+          </div>
+
+          <div class="cb">
+            <label class="adauga-cerere" v-if="!checked"
+              ><strong>Doresc sa devin administrator:</strong>
+            </label>
+            <input type="checkbox" id="checkbox" v-model="checked" />
+            <label for="checkbox">
+              <div class="field" v-if="checked">
+                <label for="file" class="label">
+                  <strong>Te rugăm să adaugi cererea aici:</strong></label
+                >
+                <input type="file" ref="file" @change="selectFile" />
+              </div>
+            </label>
+          </div>
         </figcaption>
       </figure>
     </div>
@@ -33,6 +50,7 @@ export default {
   data() {
     return {
       content: "",
+      checked: false,
     };
   },
   computed: {
@@ -44,6 +62,11 @@ export default {
     if (!this.currentUser) {
       this.$router.push("/login");
     }
+  },
+  methods: {
+    selectFile() {
+      this.file = this.$refs.file.files[0];
+    },
   },
 };
 </script>
@@ -152,15 +175,57 @@ figure {
   text-align: center;
 }
 
-.jumbotron {
+@keyframes zoominoutsinglefeatured {
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.1, 1.1);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+.jumbotronn {
+  animation: zoominoutsinglefeatured 3s infinite;
   border-radius: 25px;
   border: 2px solid #011f4b;
-  margin-top: 5%;
+
   background-color: #b3cde0;
   box-shadow: 5px 5px 10px #011f4b;
+  width: 60%;
+  margin: auto;
+  margin-top: 5%;
 }
 .info {
   text-align: center;
   text-shadow: 1px 1px;
+}
+.profile {
+  margin-top: 3%;
+}
+.options {
+  display: flex;
+  justify-content: center;
+}
+.btnn {
+  padding: 1%;
+  margin-top: 2%;
+  border-radius: 25px;
+  border: 2px solid #2980b9;
+  background-color: #2980b9;
+  margin-top: 5%;
+}
+span {
+  text-color: white;
+}
+.cb {
+  border: 2px solid #2980b9;
+  padding: 1%;
+  padding-top: 3%;
+}
+.pagina-profil {
+  margin: auto;
+  align-items: center;
 }
 </style>

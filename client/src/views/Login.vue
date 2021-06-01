@@ -8,7 +8,7 @@
       />
       <form name="form" @submit.prevent="handleLogin">
         <div class="form-group">
-          <label for="username">Nume de ultilizator</label>
+          <label for="username"><strong>Nume de ultilizator</strong></label>
           <input
             v-model="user.username"
             v-validate="'required'"
@@ -20,10 +20,12 @@
             v-if="errors.has('username')"
             class="alert alert-danger"
             role="alert"
-          >Username is required!</div>
+          >
+            Username is required!
+          </div>
         </div>
         <div class="form-group">
-          <label for="password">Parola</label>
+          <label for="password"><strong>Parola</strong></label>
           <input
             v-model="user.password"
             v-validate="'required'"
@@ -35,16 +37,23 @@
             v-if="errors.has('password')"
             class="alert alert-danger"
             role="alert"
-          >Password is required!</div>
+          >
+            Password is required!
+          </div>
         </div>
         <div class="form-group">
           <button class="btn btn-primary btn-block" :disabled="loading">
-            <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-            <span>Intră în cont</span>
+            <span
+              v-show="loading"
+              class="spinner-border spinner-border-sm"
+            ></span>
+            <span><strong>Intră în cont</strong></span>
           </button>
         </div>
         <div class="form-group">
-          <div v-if="message" class="alert alert-danger" role="alert">{{message}}</div>
+          <div v-if="message" class="alert alert-danger" role="alert">
+            {{ message }}
+          </div>
         </div>
       </form>
     </div>
@@ -52,42 +61,42 @@
 </template>
 
 <script>
-import User from '../models/user';
+import User from "../models/user";
 
 export default {
-  name: 'Login',
+  name: "Login",
   data() {
     return {
-      user: new User('', ''),
+      user: new User("", ""),
       loading: false,
-      message: ''
+      message: "",
     };
   },
   computed: {
     loggedIn() {
       return this.$store.state.auth.status.loggedIn;
-    }
+    },
   },
   created() {
     if (this.loggedIn) {
-      this.$router.push('/profil');
+      this.$router.push("/profil");
     }
   },
   methods: {
     handleLogin() {
       this.loading = true;
-      this.$validator.validateAll().then(isValid => {
+      this.$validator.validateAll().then((isValid) => {
         if (!isValid) {
           this.loading = false;
           return;
         }
 
         if (this.user.username && this.user.password) {
-          this.$store.dispatch('auth/login', this.user).then(
+          this.$store.dispatch("auth/login", this.user).then(
             () => {
-              this.$router.push('/profil');
+              this.$router.push("/profil");
             },
-            error => {
+            (error) => {
               this.loading = false;
               this.message =
                 (error.response && error.response.data) ||
@@ -97,8 +106,8 @@ export default {
           );
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -134,37 +143,40 @@ label {
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
-  
 }
-.card-container{
+.card-container {
   background-color: #b3cde0;
 }
-input{
-border-radius: 25px;
-border: 2px solid #011f4b;
-padding: 20px;
-width: 100%;
+input {
+  border-radius: 25px;
+  border: 2px solid #011f4b;
+  padding: 20px;
+  width: 100%;
 }
-button{
-border-radius: 25px;
-border: 2px solid #011f4b;
-padding: 20px;
-background-color: #011f4b;
+button {
+  border-radius: 25px;
+  border: 2px solid #011f4b;
+  padding: 20px;
+  background-color: #011f4b;
 }
-img{
-border-radius: 25px;
-border: 2px solid #011f4b;
+img {
+  border-radius: 25px;
+  border: 2px solid #011f4b;
 }
-.cb{
-display: flex;
-justify-content: space-between;
+.cb {
+  display: flex;
+  justify-content: space-between;
 }
 
-.card-container{
-border-radius: 25px;
-border: 2px solid #011f4b;
+.card-container {
+  border-radius: 25px;
+  border: 2px solid #011f4b;
+  box-shadow: 7px 10px 10px #011f4b;
 }
 .btn-primary {
   margin-top: 15%;
+}
+span {
+  text-color: white;
 }
 </style>
