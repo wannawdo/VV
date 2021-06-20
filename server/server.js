@@ -1,4 +1,5 @@
 const express = require("express");
+const fileUpload = require("express-fileupload");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
@@ -11,14 +12,20 @@ var corsOptions = {
 const db = require("./models");
 const Role = db.role;
 
-// db.sequelize.sync({force: true}).then(() => {
-//   console.log('Drop and Resync Db');
+// db.sequelize.sync({ force: true }).then(() => {
+//   console.log("Drop and Resync Db");
 //   initial();
 // });
 
 db.sequelize.sync();
 
 app.use(cors(corsOptions));
+
+app.use(
+  fileUpload({
+    createParentPath: true,
+  })
+);
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());

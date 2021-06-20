@@ -34,7 +34,7 @@
             :key="index"
             @click="setActiveUser(user, index)"
           >
-            {{ user.name }}
+            {{ user.name }} - {{ user.active ? "Activ" : "Inactiv" }}
           </li>
         </ul>
       </div>
@@ -57,7 +57,11 @@
             <p class="select">Selectează un candidat...</p>
           </div>
           <div class="form-group-crearecont">
-            <button class="btnn btn-primary btn-block" :disabled="loading">
+            <button
+              class="btnn btn-primary btn-block"
+              :disabled="loading"
+              @click="acceptUser"
+            >
               <span
                 v-show="loading"
                 class="spinner-border spinner-border-sm"
@@ -66,7 +70,11 @@
             </button>
           </div>
           <div class="form-group-crearecont">
-            <button class="btnn btn-primary btn-block" :disabled="loading">
+            <button
+              class="btnn btn-primary btn-block"
+              :disabled="loading"
+              @click="deleteUser"
+            >
               <span
                 v-show="loading"
                 class="spinner-border spinner-border-sm"
@@ -77,7 +85,11 @@
         </div>
         <div class="butoane">
           <div class="form-group-crearecont">
-            <button class="btn btn-primary btn-block" :disabled="loading">
+            <button
+              class="btn btn-primary btn-block"
+              :disabled="loading"
+              @click="acceptAllUsers"
+            >
               <span
                 v-show="loading"
                 class="spinner-border spinner-border-sm"
@@ -86,12 +98,16 @@
             </button>
           </div>
           <div class="form-group-crearecont">
-            <button class="btn btn-primary btn-block" :disabled="loading">
+            <button
+              class="btn btn-primary btn-block"
+              :disabled="loading"
+              @click="deleteAllUsers"
+            >
               <span
                 v-show="loading"
                 class="spinner-border spinner-border-sm"
               ></span>
-              <span><strong>Șterge toate conturile</strong></span>
+              <span><strong>Șterge toate conturile inactive</strong></span>
             </button>
           </div>
         </div>
@@ -131,6 +147,34 @@ export default {
       this.retrieveUsers();
       this.currentUser = null;
       this.currentIndex = -1;
+    },
+
+    acceptUser() {
+      AdministratorService.activate(this.currentUser.id).then(() => {
+        this.refreshList();
+      });
+    },
+
+    deleteUser() {
+      AdministratorService.delete(this.currentUser.id).then(() => {
+        this.refreshList();
+      });
+    },
+
+    acceptAllUsers() {
+      AdministratorService.activateAll().then(() => {
+        this.refreshList();
+      });
+    },
+
+    deleteAllUsers() {
+      AdministratorService.deleteAll().then(() => {
+        this.refreshList();
+      });
+    },
+
+    isUserActive() {
+      return this.currentUser.active;
     },
 
     setActiveUser(user, index) {

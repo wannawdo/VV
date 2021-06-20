@@ -14,7 +14,7 @@
       <v-divider></v-divider>
 
       <v-card-text class="white--text text-center">
-        &copy;2019 -
+        &copy;2021 -
         <strong>
           <a href="https://www.linkedin.com/in/oana-dragomirescu-87922b171/">
             Oana Dragomirescu

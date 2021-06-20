@@ -9,6 +9,14 @@ class AdministratorService {
     return http.get(`/gestionareconturi/${id}`);
   }
 
+  activate(id) {
+    return http.post(`/gestionareconturi/activare/${id}`);
+  }
+
+  activateAll() {
+    return http.post(`/gestionareconturi/activareConturi/`);
+  }
+
   create(data) {
     return http.post("/gestionareconturi", data);
   }

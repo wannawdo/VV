@@ -1,23 +1,18 @@
 const config = require("../config/db.config.js");
 
 const Sequelize = require("sequelize");
-const sequelize = new Sequelize(
-  config.DB,
-  config.USER,
-  config.PASSWORD,
-  {
-    host: config.HOST,
-    dialect: config.dialect,
-    operatorsAliases: false,
+const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
+  host: config.HOST,
+  dialect: config.dialect,
+  operatorsAliases: false,
 
-    pool: {
-      max: config.pool.max,
-      min: config.pool.min,
-      acquire: config.pool.acquire,
-      idle: config.pool.idle
-    }
-  }
-);
+  pool: {
+    max: config.pool.max,
+    min: config.pool.min,
+    acquire: config.pool.acquire,
+    idle: config.pool.idle,
+  },
+});
 
 const db = {};
 
@@ -31,29 +26,31 @@ db.result = require("../models/result.role.js")(sequelize, Sequelize);
 db.session = require("../models/session.model.js")(sequelize, Sequelize);
 db.type = require("../models/type.model.js")(sequelize, Sequelize);
 db.vote = require("../models/vote.model.js")(sequelize, Sequelize);
-db.application = require("../models/application.model.js")(sequelize, Sequelize);
-
+db.application = require("../models/application.model.js")(
+  sequelize,
+  Sequelize
+);
 
 db.role.belongsToMany(db.user, {
   through: "user_roles",
   foreignKey: "roleId",
-  otherKey: "userId"
+  otherKey: "userId",
 });
 db.user.belongsToMany(db.role, {
   through: "user_roles",
   foreignKey: "userId",
-  otherKey: "roleId"
+  otherKey: "roleId",
 });
 
 db.type.belongsToMany(db.request, {
   through: "request_types",
   foreignKey: "typeId",
-  otherKey: "requestId"
+  otherKey: "requestId",
 });
 db.request.belongsToMany(db.type, {
   through: "request_types",
   foreignKey: "requestId",
-  otherKey: "typeId"
+  otherKey: "typeId",
 });
 
 db.user.hasMany(db.application, { onDelete: "Cascade" });

@@ -150,6 +150,7 @@ export default {
     handleRegister() {
       const formData = new FormData();
       formData.append("file", this.file);
+      formData.append("username", this.user.username);
       this.message = "";
       this.submitted = true;
       this.$validator.validate().then((isValid) => {
@@ -157,7 +158,12 @@ export default {
           this.$store.dispatch("auth/register", this.user).then(
             (data) => {
               this.message = data.message;
-              axios.post("/register", formData);
+              axios.post(
+                "http://" +
+                  window.location.hostname +
+                  ":8080/api/auth/register",
+                formData
+              );
               this.successful = true;
             },
             () => {

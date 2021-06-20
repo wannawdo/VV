@@ -57,26 +57,28 @@ export default {
         {
           img:
             "https://www.criticalstart.com/wp-content/uploads/2020/10/secure_vote_1200px.jpg__1200x630_q85_crop_subsampling-2_upscale-1024x538-1.jpg",
-          title: "Give Your Home a Little Responsibility",
-          mark: "Convenience",
+          title: "Eficacitate",
+          mark: "O alternativă ce soluționează multiple probleme",
         },
         {
           img:
             "https://www.topxlisting.com/blog/wp-content/uploads/2019/01/Ways-to-Get-Testimonials-From-Your-Customers.png",
-          title: "Always Be In The Know",
-          mark: "Monitoring & Safety",
+
+          title: "Profesionalism",
+          mark: "O aplicație elegantă",
         },
         {
           img:
-            "https://www.calyron.com/admin/uploads/client-testimonials-768x432.jpg",
-          title: "Smarter Home Security",
-          mark: "Security",
+            // "https://www.calyron.com/admin/uploads/client-testimonials-768x432.jpg",
+            "https://www.criticalstart.com/wp-content/uploads/2020/10/secure_vote_1200px.jpg__1200x630_q85_crop_subsampling-2_upscale-1024x538-1.jpg",
+          title: "Securitate",
+          mark: "Votul tău este în siguranță",
         },
         {
           img:
             "https://kissflow.com/wp-content/uploads/2019/03/approval-process.jpg",
-          title: "Experience Lighting in a New Way",
-          mark: "Lighting",
+          title: "Rapididate",
+          mark: "Rezultalele sunt livrate rapid",
         },
       ],
       current: 0,
@@ -263,7 +265,7 @@ h3 {
 .slider ul.indicators li .title {
   color: #fff;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 20px;
   font-family: "SegoeUI-Bold";
   transition: font-size 0.6s ease-out;
 }
@@ -271,7 +273,8 @@ h3 {
   font-family: "SegoeUI-Semilight";
 }
 .mark {
-  background-color: rgba(0, 0, 0, 0.01);
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 15%;
 }
 .title {
   background-color: rgba(0, 0, 0, 0.01);
@@ -300,6 +303,7 @@ h3 {
 .slider ul.indicators li.active .title {
   transition: font-size 0.6s ease-in;
   font-size: 36px;
+  font-weight: bold;
   font-family: "SegoeUI-Light";
 }
 .slider ul.indicators li.active .progress .fill {
