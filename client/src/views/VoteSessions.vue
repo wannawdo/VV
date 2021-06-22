@@ -6,6 +6,16 @@
     <div class="poll-view__inner">
       <div class="poll-view__question">
         <input
+          v-model="poll.description"
+          type="text"
+          placeholder="YourDescription..."
+        />
+      </div>
+      <div class="poll-view__question">
+        <input v-model="poll.duration" type="number" placeholder="Days" />
+      </div>
+      <div class="poll-view__question">
+        <input
           v-model="poll.question"
           type="text"
           placeholder="Your Question..."
@@ -26,17 +36,6 @@
           />
           <span class="delete" @click="deleteInput(index)">șterge opțiune</span>
         </div>
-      </div>
-      <div class="poll-view__options">
-        <label class="checkbox"
-          >Permite bifarea a mai multor rezultate
-          <input
-            v-model="poll.multipleVotes"
-            type="checkbox"
-            checked="checked"
-          />
-          <span class="checkmark"></span>
-        </label>
       </div>
       <div class="poll-view__submit">
         <button @click="createPoll">Creează sesiunea de vot</button>
@@ -75,6 +74,8 @@ export default {
     return {
       poll: {
         question: "Pune aici întrebarea",
+        duration: 20,
+        description: "Completeaza descrierea",
         answers: [
           { answer: "Răspuns 1" },
           { answer: "Răspuns 2" },
@@ -120,26 +121,22 @@ export default {
         }, 1500);
       } else {
         if (this.isValid) {
+          let data = JSON.parse(JSON.stringify(this.poll));
+          let answers = [];
+          for (let i = 0; i < data.answers.length; i++) {
+            answers.push(data.answers[i].answer);
+          }
           axios
-            .post(
-              this.savePollUrl,
-              {
-                poll: this.poll,
-              },
-              {
-                maxContentLength: 2000,
-              }
-            )
-            .then((response) => {
-              console.log(response.data);
-              this.alert(true);
-              setTimeout(() => {
-                this.resetPoll();
-              }, 1500);
+            .post("http://" + window.location.hostname + ":8080/sesiunivot", {
+              name: data.description,
+              duration: data.duration,
+              description: data.question,
+              options: answers,
+              accessToken: JSON.parse(window.localStorage.getItem("user"))
+                .accessToken,
             })
-            .catch((error) => {
-              this.alert(false);
-              error.request.res.destroy();
+            .then(() => {
+              this.alert(true);
             });
         } else {
           this.alert(false);

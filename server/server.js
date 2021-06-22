@@ -2,6 +2,8 @@ const express = require("express");
 const fileUpload = require("express-fileupload");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+global.jwt = require("jsonwebtoken");
+global.config = require("./config/auth.config");
 
 const app = express();
 

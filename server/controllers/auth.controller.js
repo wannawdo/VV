@@ -1,16 +1,13 @@
 const db = require("../models");
-const config = require("../config/auth.config");
 const User = db.user;
 const Role = db.role;
 
 const Op = db.Sequelize.Op;
 
-var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
 exports.signup = async (req, res) => {
   // Save User to Database
-  // TODO: adauga dovada administrator
   try {
     const user = await User.create({
       name: req.body.name,

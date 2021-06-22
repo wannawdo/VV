@@ -1,6 +1,132 @@
 const db = require("../models");
 const Sessions = db.session;
+const Vote = db.vote;
 const Op = db.Sequelize.Op;
+
+exports.createVoteSession = (req, res) => {
+  const { name, duration, description, userId, options, accessToken } =
+    req.body;
+  const errors = [];
+
+  if (!name) {
+    errors.push("Name is empty");
+  }
+  if (!description) {
+    errors.push("Description is empty");
+  }
+  if (!duration) {
+    errors.push("Duration is empty");
+  }
+  // else if (!duration.match(/^[0-9]*$/)) {
+  //   errors.push("Duration is not valid");
+  // }
+
+  if (errors.length === 0) {
+    const session = Sessions.create({
+      name,
+      duration,
+      accessCode: Math.random().toString(36).slice(6),
+      status: 1,
+      description,
+      options: options.join(";"),
+      userId: jwt.verify(accessToken, config.secret).id,
+    });
+    res.status(201).send({
+      message: `Session ${description} was sucessfull created`,
+      accessCode: session.accessCode,
+    });
+  } else {
+    res.status(400).send({ errors });
+  }
+};
+
+exports.getVoteSessions = (req, res) => {
+  let formattedSessions = [];
+  const sessions = Sessions.findAll({
+    attributes: [
+      "id",
+      "name",
+      "duration",
+      "status",
+      "description",
+      "createdAt",
+      "options",
+    ],
+  }).then((data) => {
+    for (let i = 0; i < data.length; i++) {
+      const votes = Vote.findAll({
+        attributes: ["option", "createdAt"],
+        where: {
+          sessionId: data[i].id,
+        },
+      });
+
+      data[i].votes = votes;
+      data[i].options = data[i].options.split(";");
+      formattedSessions.push(data[i]);
+    }
+    res.status(200).send(formattedSessions);
+  });
+};
+
+exports.getVoteSessionsById = (req, res) => {
+  const { id } = req.params;
+  const session = Sessions.findOne({
+    attributes: [
+      "id",
+      "accessCode",
+      "duration",
+      "status",
+      "description",
+      "createdAt",
+    ],
+    where: {
+      id: id,
+    },
+  });
+
+  console.log(session);
+  const itemTime = new Date(session.createdAt);
+
+  if (itemTime.getTime() + session.duration * 60 * 1000 < Date.now()) {
+    session.update({ ...session, status: 0 });
+  }
+
+  const vote = Vote.findAll({
+    attributes: ["option", "createdAt"],
+    where: {
+      sessionId: session.id,
+    },
+  });
+  res.status(200).send({ ...session.get({ plain: true }), vote });
+};
+
+exports.postVote = (req, res) => {
+  const { option, sesssionId } = req.body;
+
+  const sesssion = Sessions.findOne({
+    attributes: [
+      "id",
+      "description",
+      "duration",
+      "createdAt",
+      "userId",
+      "status",
+    ],
+    where: { id: sesssionId },
+  });
+
+  if (!sesssion) {
+    res.status(400).send({ message: `Session not exists` });
+  } else {
+    if (sesssion.status) {
+      Vote.create({ emoticon, sesssionId, userId: req.session.id });
+      res.status(201).send({ message: `Vote was sent` });
+    } else {
+      res.status(403).send({ message: `Session finished` });
+    }
+  }
+};
 
 exports.create = async (req, res) => {
   try {

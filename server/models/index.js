@@ -56,6 +56,7 @@ db.request.belongsToMany(db.type, {
 db.user.hasMany(db.application, { onDelete: "Cascade" });
 db.user.hasMany(db.vote, { onDelete: "Cascade" });
 db.user.hasMany(db.request, { onDelete: "Cascade" });
+db.user.hasMany(db.session, { onDelete: "Cascade" });
 db.session.hasMany(db.application, { onDelete: "Cascade" });
 db.session.hasMany(db.result, { onDelete: "Cascade" });
 db.session.hasMany(db.vote, { onDelete: "Cascade" });
