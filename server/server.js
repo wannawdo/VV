@@ -3,6 +3,7 @@ const fileUpload = require("express-fileupload");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 global.jwt = require("jsonwebtoken");
+global.md5 = require("md5");
 global.config = require("./config/auth.config");
 
 const app = express();
@@ -42,6 +43,7 @@ app.get("/", (req, res) => {
 
 require("./routes/administrator.routes")(app);
 require("./routes/vote.sessions.routes")(app);
+require("./routes/candidatura.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

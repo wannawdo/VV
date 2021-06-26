@@ -11,9 +11,9 @@
         <figcaption>
           <!--<img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg" alt="profile-sample4" class="profile" />-->
           <h2>
-            {{ candidat.nume }}<span>{{ candidat.prenume }}</span>
+            {{ candidat.nume }}<span>{{ candidat.username }}</span>
           </h2>
-          <p>{{ candidat.descriere }}</p>
+          <p v-html="candidat.descriere"></p>
           <a href="#" class="follow">Follow</a>
         </figcaption>
       </figure>
@@ -22,64 +22,26 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Candidati",
   data() {
     return {
       content: "",
-      candidati: [
-        {
-          id: 1,
-          poza:
-            "https://qph.fs.quoracdn.net/main-qimg-5004d88d80aa37fedeafaef8be2d8cf4",
-          nume: "Ionel",
-          prenume: "Popescu",
-          descriere: "test tetsttt testt",
-        },
-        {
-          id: 2,
-          poza:
-            "https://qph.fs.quoracdn.net/main-qimg-5004d88d80aa37fedeafaef8be2d8cf4",
-          nume: "fdssfddl",
-          prenume: "Podfsdfdscu",
-          descriere: "test tetdfsddfddsft",
-        },
-        {
-          id: 3,
-          poza:
-            "https://qph.fs.quoracdn.net/main-qimg-5004d88d80aa37fedeafaef8be2d8cf4",
-          nume: "Gigel",
-          prenume: "Popescu",
-          descriere: "test tdsddsetsttt testt",
-        },
-        {
-          id: 4,
-          poza:
-            "https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg",
-          nume: "Ionel",
-          prenume: "Popescu",
-          descriere: "test tetsttt testt",
-        },
-        {
-          id: 5,
-          poza:
-            "https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg",
-          nume: "fdssfddl",
-          prenume: "Podfsdfdscu",
-          descriere: "test tetdfsddfddsft",
-        },
-        {
-          id: 6,
-          poza:
-            "https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg",
-          nume: "Gigel",
-          prenume: "Popescu",
-          descriere: "test tdsddsetsttt testt",
-        },
-      ],
+      candidati: [],
     };
   },
-  mounted() {},
+  mounted() {
+    axios
+      .get("http://" + window.location.hostname + ":8080/candidaturi", {
+        accessToken: JSON.parse(window.localStorage.getItem("user"))
+          .accessToken,
+      })
+      .then((data) => {
+        this.candidati = data.data;
+      });
+  },
 };
 </script>
 

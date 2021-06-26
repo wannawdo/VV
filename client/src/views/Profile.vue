@@ -8,12 +8,8 @@
 
     <div class="profile">
       <figure class="snip1336">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg"
-          alt="sample87"
-        />
+        <img v-bind:src="imageurl" />
         <figcaption>
-          <!--<img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg" alt="profile-sample4" class="profile" />-->
           <h2>
             {{ currentUser.name
             }}<span>Username: {{ currentUser.username }}</span>
@@ -45,11 +41,15 @@
 </template>
 
 <script>
+import md5 from "md5";
+
 export default {
   name: "Profile",
   data() {
     return {
       content: "",
+      imageurl:
+        "https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg",
       checked: false,
     };
   },
@@ -61,6 +61,11 @@ export default {
   mounted() {
     if (!this.currentUser) {
       this.$router.push("/login");
+    } else {
+      this.imageurl =
+        "https://www.gravatar.com/avatar/" +
+        md5(this.currentUser.email) +
+        "?s=600&d=mp";
     }
   },
   methods: {

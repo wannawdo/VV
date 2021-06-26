@@ -22,7 +22,7 @@
     /> -->
 
     <div class="butonas">
-      <button class="btnnn btn-primary btn-block">
+      <button class="btnnn btn-primary btn-block" @click="send">
         <span><strong>Trimite candidatură</strong></span>
       </button>
     </div>
@@ -30,25 +30,25 @@
 </template>
 
 <script>
+// You can also register Quill modules in the component
 import UserService from "../services/user.service";
-
+import axios from "axios";
+import { quillEditor } from "vue-quill-editor";
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
-
-import { quillEditor } from "vue-quill-editor";
 export default {
   components: {
     quillEditor,
   },
-  name: "Candidatura",
   data() {
     return {
-      content: "",
-      editorOption: {},
+      content: "<p>Candidatura...</p>",
+      editorOption: {
+        // Some Quill options...
+      },
     };
   },
-
   methods: {
     onEditorBlur(quill) {
       console.log("editor blur!", quill);
@@ -63,6 +63,15 @@ export default {
       console.log("editor change!", quill, html, text);
       this.content = html;
     },
+    send() {
+      axios
+        .put("http://" + window.location.hostname + ":8080/candidaturi", {
+          text: this.content,
+          accessToken: JSON.parse(window.localStorage.getItem("user"))
+            .accessToken,
+        })
+        .then(() => {});
+    },
   },
   computed: {
     editor() {
@@ -73,7 +82,7 @@ export default {
     console.log("this is current quill instance object", this.editor);
     UserService.getCandidatBoard().then(
       (response) => {
-        this.content = response.data;
+        this.content = response.data.text;
       },
       (error) => {
         this.content =

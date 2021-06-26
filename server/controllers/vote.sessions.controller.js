@@ -40,9 +40,8 @@ exports.createVoteSession = (req, res) => {
   }
 };
 
-exports.getVoteSessions = (req, res) => {
-  let formattedSessions = [];
-  const sessions = Sessions.findAll({
+exports.getVoteSessions = async (req, res) => {
+  const rawSessions = await Sessions.findAll({
     attributes: [
       "id",
       "name",
@@ -52,21 +51,23 @@ exports.getVoteSessions = (req, res) => {
       "createdAt",
       "options",
     ],
-  }).then((data) => {
-    for (let i = 0; i < data.length; i++) {
-      const votes = Vote.findAll({
+    raw: true,
+  });
+
+  const sessions = await Promise.all(
+    rawSessions.map(async (session) => {
+      const votes = await Vote.findAll({
         attributes: ["option", "createdAt"],
         where: {
-          sessionId: data[i].id,
+          sessionId: session.id,
         },
       });
 
-      data[i].votes = votes;
-      data[i].options = data[i].options.split(";");
-      formattedSessions.push(data[i]);
-    }
-    res.status(200).send(formattedSessions);
-  });
+      return { ...session, votes, options: session.options.split(";") };
+    })
+  );
+
+  res.status(200).send(sessions);
 };
 
 exports.getVoteSessionsById = (req, res) => {

@@ -14,7 +14,11 @@ const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
   },
 });
 
-const db = {};
+const db = {
+  // Sequelize,
+  // sequelize,
+  // User: require("../models/user.model.js")(sequelize, Sequelize)
+};
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
