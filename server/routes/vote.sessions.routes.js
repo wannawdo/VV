@@ -13,11 +13,16 @@ module.exports = function (app) {
   // Create a new Tutorial
   app.post("/sesiunivot", sessions.createVoteSession);
 
+  app.post("/vot", sessions.postVote);
+
   // Retrieve all Tutorials
   app.get("/sesiunivot/toatesesiunile", sessions.getVoteSessions);
 
   // Retrieve all sessions by id
-  app.get("/sesiunivot/:id", sessions.getVoteSessionsById);
+  app.get(
+    "/sesiunivot/:id/:accessCode/:accessToken",
+    sessions.getVoteSessionsById
+  );
 
   // Retrieve a single Tutorial with id
   //app.get("/sesiunivot/:id", sessions.findOne);

@@ -2,11 +2,14 @@ import http from "../http-common.ts";
 
 class VoteSessionsService {
   getAll() {
-    return http.get("/sesiunivot");
+    return http.get("/sesiunivot/toatesesiunile");
   }
 
-  get(id) {
-    return http.get(`/sesiunivot/${id}`);
+  get(id, accessCode) {
+    return http.get(
+      `/sesiunivot/${id}/${accessCode}/` +
+        JSON.parse(window.localStorage.getItem("user")).accessToken
+    );
   }
 
   create(data) {
@@ -26,7 +29,7 @@ class VoteSessionsService {
   }
 
   findByTitle(title) {
-    return http.get(`/sesiunivot?nume=${name}`);
+    return http.get(`/sesiunivot/toatesesiunile?name=${title}`);
   }
 }
 

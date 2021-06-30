@@ -11,16 +11,10 @@ module.exports = function (app) {
     next();
   });
 
-  // Retrieve all users
   app.get("/candidaturi", candidatura.findAll);
 
-  // Retrieve all published user
-  //   app.get("/gestionareconturi/published", user.findAllByCondition);
-
-  // Retrieve a single user with id
   app.get("/candidaturi/:accessToken", candidatura.findOne);
 
-  // Delete a user with id
   app.delete("/candidaturi/:id", candidatura.deleteOne);
 
   app.delete("/candidaturi/all", candidatura.deleteAll);

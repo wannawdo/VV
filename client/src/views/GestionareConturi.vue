@@ -251,6 +251,8 @@ span {
 }
 .input-group {
   margin: 0%;
+  border-radius: 25px;
+  padding: 1%;
 }
 .butoane {
   border-radius: 25px;
@@ -265,10 +267,7 @@ span {
   padding: 1%;
   margin-top: 2%;
 }
-.input-group {
-  border-radius: 25px;
-  padding: 1%;
-}
+
 @keyframes zoominoutsinglefeatured {
   0% {
     transform: scale(1, 1);
