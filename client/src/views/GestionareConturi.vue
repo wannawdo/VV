@@ -83,6 +83,35 @@
             </button>
           </div>
         </div>
+        <div
+          class="col-md-6-1"
+          v-if="currentUser && currentUser.requests.length"
+        >
+          <h3>Cereri</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Tip</th>
+                <th>Fișier</th>
+                <th>Acțiune</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(request, index) in currentUser.requests" :key="index">
+                <td>Candidat</td>
+                <td v-html="processLink(request.evidence)"></td>
+                <td>
+                  <a
+                    v-if="!request.status"
+                    href="#"
+                    @click="setRole(currentUser.id, request.id)"
+                    >Acceptă</a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div class="butoane">
           <div class="form-group-crearecont">
             <button
@@ -119,6 +148,7 @@
 <script>
 import UserService from "../services/user.service";
 import AdministratorService from "../services/administrator.service";
+import axios from "axios";
 
 export default {
   name: "GestionareConturi",
@@ -132,6 +162,34 @@ export default {
     };
   },
   methods: {
+    setRole(userId, requestId) {
+      axios
+        .put(
+          "http://" +
+            window.location.hostname +
+            ":8080/gestionareconturi/tip/" +
+            userId,
+          {
+            requestId: requestId,
+            accessToken: JSON.parse(window.localStorage.getItem("user"))
+              .accessToken,
+          }
+        )
+        .then(() => {
+          this.refreshList();
+        });
+    },
+    processLink(file_name) {
+      return (
+        "<a href='http://" +
+        window.location.hostname +
+        ":8080/uploads/" +
+        file_name +
+        "' target='_blank'>" +
+        file_name +
+        "</a>"
+      );
+    },
     retrieveUsers() {
       AdministratorService.getAll()
         .then((response) => {

@@ -18,58 +18,57 @@
       </div>
     </div>
     <div class="dispFlex">
-      <div class="alegeSesiune">
-        <div class="col-md-6">
-          <ul class="list-group">
-            <li
-              class="list-group-item"
-              :class="{ active: index == currentIndex }"
-              v-for="(session, index) in sessions"
-              :key="index"
-              @click="setActiveSession(session, index)"
+      <div class="col-md-6">
+        <ul class="list-group">
+          <li
+            class="list-group-item"
+            :class="{ active: index == currentIndex }"
+            v-for="(session, index) in sessions"
+            :key="index"
+            @click="setActiveSession(session, index)"
+          >
+            {{ session.name }}
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-6">
+        <div class="col-md-6-1">
+          <div v-if="currentSession">
+            <h4>Sesiune selectata</h4>
+            <div>
+              <label><strong>Nume:</strong></label> {{ currentSession.name }}
+            </div>
+            <div class="form-group">
+              <label for="name"><strong>Cod de acces</strong></label>
+              <input
+                v-model="accessCode"
+                v-validate="'required|min:3|max:20'"
+                type="text"
+                class="form-control"
+                name="name"
+              />
+            </div>
+          </div>
+          <div v-else>
+            <br />
+            <p class="select">Selectează o sesiune de vot...</p>
+          </div>
+          <div class="form-group-crearecont">
+            <button
+              class="btnn btn-primary btn-block"
+              :disabled="loading"
+              @click="accessSession()"
             >
-              {{ session.name }}
-            </li>
-          </ul>
-        </div>
-        <div class="col-md-6">
-          <div class="col-md-6-1">
-            <div v-if="currentSession">
-              <h4>Sesiune selectata</h4>
-              <div>
-                <label><strong>Nume:</strong></label> {{ currentSession.name }}
-              </div>
-              <div class="form-group">
-                <label for="name"><strong>Cod de acces</strong></label>
-                <input
-                  v-model="accessCode"
-                  v-validate="'required|min:3|max:20'"
-                  type="text"
-                  class="form-control"
-                  name="name"
-                />
-              </div>
-            </div>
-            <div v-else>
-              <br />
-              <p class="select">Selectează o sesiune de vot...</p>
-            </div>
-            <div class="form-group-crearecont">
-              <button
-                class="btnn btn-primary btn-block"
-                :disabled="loading"
-                @click="accessSession()"
-              >
-                <span
-                  v-show="loading"
-                  class="spinner-border spinner-border-sm"
-                ></span>
-                <span><strong>Acceseaza sesiunea</strong></span>
-              </button>
-            </div>
+              <span
+                v-show="loading"
+                class="spinner-border spinner-border-sm"
+              ></span>
+              <span><strong>Acceseaza sesiunea</strong></span>
+            </button>
           </div>
         </div>
       </div>
+
       <div class="poll-view" v-if="loadedSession">
         <div class="poll-view__title" v-html="poll.question"></div>
         <div v-if="!result" class="poll-view__inner">
@@ -364,6 +363,9 @@ export default {
   border: 2px solid #011f4b;
   padding: 5%;
   background-color: #b3cde0;
+}
+.col-md-6 {
+  max-width: 33%;
 }
 
 .list-group {

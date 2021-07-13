@@ -54,19 +54,6 @@ exports.getVoteSessions = async (req, res) => {
     where: condition,
   });
 
-  // const sessions = await Promise.all(
-  //   rawSessions.map(async (session) => {
-  //     const votes = await Vote.findAll({
-  //       attributes: ["option", "createdAt"],
-  //       where: {
-  //         sessionId: session.id,
-  //       },
-  //     });
-
-  //     return { ...session, votes, options: session.options.split(";") };
-  //   })
-  // );
-
   res.status(200).send(sessions);
 };
 

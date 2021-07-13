@@ -12,23 +12,57 @@ module.exports = function (app) {
   });
 
   // Retrieve all users
-  app.get("/gestionareconturi", administrator.findAll);
+  app.get(
+    "/gestionareconturi",
+    [authJwt.verifyToken, authJwt.isAdministrator],
+    administrator.findAll
+  );
 
   // Retrieve all published user
   // app.get("/gestionareconturi/published", user.findAllByCondition);
 
   // Retrieve a single user with id
-  app.get("/gestionareconturi/:id", administrator.findOne);
+  app.get(
+    "/gestionareconturi/:id",
+    [authJwt.verifyToken, authJwt.isAdministrator],
+    administrator.findOne
+  );
 
   // Update a user with id
-  app.put("/gestionareconturi/:id", administrator.update);
+  app.put(
+    "/gestionareconturi/:id",
+    [authJwt.verifyToken, authJwt.isAdministrator],
+    administrator.update
+  );
 
   // Delete a user with id
-  app.delete("/gestionareconturi/:id", administrator.delete);
+  app.delete(
+    "/gestionareconturi/:id",
+    [authJwt.verifyToken, authJwt.isAdministrator],
+    administrator.delete
+  );
 
-  app.delete("/gestionareconturi/", administrator.deleteAll);
+  app.delete(
+    "/gestionareconturi/",
+    [authJwt.verifyToken, authJwt.isAdministrator],
+    administrator.deleteAll
+  );
 
-  app.post("/gestionareconturi/activare/:id", administrator.activate);
+  app.post(
+    "/gestionareconturi/activare/:id",
+    [authJwt.verifyToken, authJwt.isAdministrator],
+    administrator.activate
+  );
 
-  app.post("/gestionareconturi/activareConturi/", administrator.activateAll);
+  app.post(
+    "/gestionareconturi/activareConturi/",
+    [authJwt.verifyToken, authJwt.isAdministrator],
+    administrator.activateAll
+  );
+
+  app.put(
+    "/gestionareconturi/tip/:id",
+    [authJwt.verifyToken, authJwt.isAdministrator],
+    administrator.setRole
+  );
 };

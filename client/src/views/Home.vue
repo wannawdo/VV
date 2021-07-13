@@ -57,27 +57,27 @@ export default {
         {
           img:
             "https://www.criticalstart.com/wp-content/uploads/2020/10/secure_vote_1200px.jpg__1200x630_q85_crop_subsampling-2_upscale-1024x538-1.jpg",
-          title: "Eficacitate",
+          title: "EFICACITATE",
           mark: "O alternativă ce soluționează multiple probleme",
         },
         {
           img:
             "https://www.topxlisting.com/blog/wp-content/uploads/2019/01/Ways-to-Get-Testimonials-From-Your-Customers.png",
 
-          title: "Profesionalism",
+          title: "PROFESIONALISM",
           mark: "O aplicație elegantă",
         },
         {
           img:
             // "https://www.calyron.com/admin/uploads/client-testimonials-768x432.jpg",
             "https://www.criticalstart.com/wp-content/uploads/2020/10/secure_vote_1200px.jpg__1200x630_q85_crop_subsampling-2_upscale-1024x538-1.jpg",
-          title: "Securitate",
+          title: "SECURITATE",
           mark: "Votul tău este în siguranță",
         },
         {
           img:
             "https://kissflow.com/wp-content/uploads/2019/03/approval-process.jpg",
-          title: "Rapididate",
+          title: "RAPIDITATE",
           mark: "Rezultalele sunt livrate rapid",
         },
       ],
@@ -273,7 +273,7 @@ h3 {
   font-family: "SegoeUI-Semilight";
 }
 .mark {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.2);
   border-radius: 15%;
 }
 .title {

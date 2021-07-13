@@ -22,4 +22,10 @@ module.exports = function (app) {
   app.post("/api/auth/signin", controller.signin);
 
   app.post("/api/auth/register", controller.register);
+
+  app.post("/user/update", controller.update);
+
+  app.post("/user/request", controller.sendRequest);
+
+  app.delete("/user/:accessToken", controller.deleteAccount);
 };

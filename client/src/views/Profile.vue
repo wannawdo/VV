@@ -17,13 +17,13 @@
             </h2>
             <p>E-mail: {{ currentUser.email }}</p>
             <div class="options">
-              <a href="#" class="follow">Editează cont</a>
-              <a href="#" class="follow">Șterge cont</a>
+              <a href="#" class="follow" @click="editAccount">Editează cont</a>
+              <a href="#" class="follow" @click="deleteAccount">Șterge cont</a>
             </div>
 
             <div class="cb">
               <label class="adauga-cerere" v-if="!checked"
-                ><strong>Doresc sa devin candidat:</strong>
+                ><center><strong>Doresc sa devin candidat:</strong></center>
               </label>
               <input type="checkbox" id="checkbox" v-model="checked" />
               <label for="checkbox">
@@ -32,6 +32,11 @@
                     <strong>Te rugăm să adaugi cererea aici:</strong></label
                   >
                   <input type="file" ref="file" @change="selectFile" />
+                  <center>
+                    <a href="#" class="follow" @click="submitRequest"
+                      >Trimite cererea</a
+                    >
+                  </center>
                 </div>
               </label>
             </div>
@@ -39,7 +44,7 @@
         </figure>
       </div>
 
-      <div class="col-md-12">
+      <div class="col-md-12" v-if="showForm">
         <div class="card card-container">
           <img
             id="profile-img"
@@ -47,7 +52,7 @@
             class="profile-img-card"
           />
           <form
-            @submit.prevent="handleRegister"
+            @submit.prevent="submitChanges"
             enctype="multipart/form-data"
             name="form"
           >
@@ -55,7 +60,7 @@
               <div class="form-group">
                 <label for="name"><strong>Nume</strong></label>
                 <input
-                  v-model="user.name"
+                  v-model="userFields.name"
                   v-validate="'required|min:3|max:20'"
                   type="text"
                   class="form-control"
@@ -73,10 +78,11 @@
                   ><strong>Nume de utilizator</strong></label
                 >
                 <input
-                  v-model="user.username"
+                  v-model="userFields.username"
                   v-validate="'required|min:3|max:20'"
                   type="text"
                   class="form-control"
+                  readonly
                   name="username"
                 />
                 <div
@@ -89,7 +95,7 @@
               <div class="form-group">
                 <label for="email"><strong>Email</strong></label>
                 <input
-                  v-model="user.email"
+                  v-model="userFields.email"
                   v-validate="'required|email|max:50'"
                   type="email"
                   class="form-control"
@@ -105,7 +111,7 @@
               <div class="form-group">
                 <label for="password"><strong>Parolă</strong></label>
                 <input
-                  v-model="user.password"
+                  v-model="userFields.password"
                   v-validate="'required|min:6|max:40'"
                   type="password"
                   class="form-control"
@@ -142,6 +148,7 @@
 <script>
 import User from "../models/user";
 import md5 from "md5";
+import axios from "axios";
 
 export default {
   name: "Profile",
@@ -155,6 +162,9 @@ export default {
       submitted: false,
       successful: false,
       message: "",
+      userFields: {},
+      showForm: false,
+      file: "",
     };
   },
   computed: {
@@ -166,6 +176,8 @@ export default {
     if (!this.currentUser) {
       this.$router.push("/login");
     } else {
+      this.userFields = JSON.parse(JSON.stringify(this.$store.state.auth.user));
+      this.userFields.password = "";
       this.imageurl =
         "https://www.gravatar.com/avatar/" +
         md5(this.currentUser.email) +
@@ -173,6 +185,47 @@ export default {
     }
   },
   methods: {
+    submitRequest() {
+      const formData = new FormData();
+      formData.append("file", this.file);
+      formData.append(
+        "accessToken",
+        JSON.parse(window.localStorage.getItem("user")).accessToken
+      );
+      axios.post(
+        "http://" + window.location.hostname + ":8080/user/request",
+        formData
+      );
+    },
+    submitChanges() {
+      axios
+        .post("http://" + window.location.hostname + ":8080/user/update", {
+          accessToken: JSON.parse(window.localStorage.getItem("user"))
+            .accessToken,
+          username: this.userFields.username,
+          password: this.userFields.password,
+          full_name: this.userFields.name,
+          email: this.userFields.email,
+        })
+        .then(() => {
+          this.$store.dispatch("auth/logout");
+          this.$router.push("/login");
+        });
+    },
+    editAccount() {
+      this.showForm = true;
+    },
+    deleteAccount() {
+      if (confirm("Sunteti sigur ca doriti sa stergeti contul?")) {
+        axios
+          .delete("http://" + window.location.hostname + ":8080/user/" + JSON.parse(window.localStorage.getItem("user"))
+              .accessToken)
+          .then(() => {
+            this.$store.dispatch("auth/logout");
+            this.$router.push("/login");
+          });
+      }
+    },
     selectFile() {
       this.file = this.$refs.file.files[0];
     },
@@ -312,6 +365,8 @@ figure {
 }
 .profile {
   margin-top: 3%;
+  max-width: 330px;
+  max-height: 650;
 }
 .options {
   display: flex;
@@ -330,6 +385,7 @@ span {
 }
 .cb {
   border: 2px solid #2980b9;
+  border-radius: 10%;
   padding: 1%;
   padding-top: 3%;
 }

@@ -11,9 +11,13 @@ module.exports = function (app) {
     next();
   });
 
-  app.get("/candidaturi", candidatura.findAll);
+  app.get("/candidaturi", [authJwt.verifyToken], candidatura.findAll);
 
-  app.get("/candidaturi/:accessToken", candidatura.findOne);
+  app.get(
+    "/candidaturi/:accessToken",
+    [authJwt.verifyToken, authJwt.isCandidat],
+    candidatura.findOne
+  );
 
   app.delete("/candidaturi/:id", candidatura.deleteOne);
 

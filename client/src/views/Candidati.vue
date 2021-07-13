@@ -14,7 +14,6 @@
             {{ candidat.nume }}<span>{{ candidat.username }}</span>
           </h2>
           <p v-html="candidat.descriere"></p>
-          <a href="#" class="follow">Follow</a>
         </figcaption>
       </figure>
     </div>
@@ -35,8 +34,10 @@ export default {
   mounted() {
     axios
       .get("http://" + window.location.hostname + ":8080/candidaturi", {
-        accessToken: JSON.parse(window.localStorage.getItem("user"))
-          .accessToken,
+        headers: {
+          "x-access-token": JSON.parse(window.localStorage.getItem("user"))
+            .accessToken,
+        },
       })
       .then((data) => {
         this.candidati = data.data;

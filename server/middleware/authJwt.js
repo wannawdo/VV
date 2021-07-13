@@ -4,18 +4,22 @@ const db = require("../models");
 const User = db.user;
 
 verifyToken = (req, res, next) => {
-  let token = req.headers["x-access-token"];
+  accessToken = req.headers["x-access-token"]
+    ? req.headers["x-access-token"]
+    : req.body.accessToken
+    ? req.body.accessToken
+    : req.params.accessToken;
 
-  if (!token) {
+  if (!accessToken) {
     return res.status(403).send({
-      message: "No token provided!"
+      message: "No token provided!",
     });
   }
 
-  jwt.verify(token, config.secret, (err, decoded) => {
+  jwt.verify(accessToken, config.secret, (err, decoded) => {
     if (err) {
-      return res.status(401).send({   
-        message: "Unauthorized!"
+      return res.status(401).send({
+        message: "Unauthorized!",
       });
     }
     req.userId = decoded.id;
@@ -24,8 +28,13 @@ verifyToken = (req, res, next) => {
 };
 
 isAdministrator = (req, res, next) => {
-  User.findByPk(req.userId).then(user => {
-    user.getRoles().then(roles => {
+  accessToken = req.headers["x-access-token"]
+    ? req.headers["x-access-token"]
+    : req.body.accessToken
+    ? req.body.accessToken
+    : req.params.accessToken;
+  User.findByPk(jwt.verify(accessToken, config.secret).id).then((user) => {
+    user.getRoles().then((roles) => {
       for (let i = 0; i < roles.length; i++) {
         if (roles[i].name === "administrator") {
           next();
@@ -34,7 +43,7 @@ isAdministrator = (req, res, next) => {
       }
 
       res.status(403).send({
-        message: "Require Admin Role!"
+        message: "Require Admin Role!",
       });
       return;
     });
@@ -42,8 +51,14 @@ isAdministrator = (req, res, next) => {
 };
 
 isCandidat = (req, res, next) => {
-  User.findByPk(req.userId).then(user => {
-    user.getRoles().then(roles => {
+  accessToken = req.headers["x-access-token"]
+    ? req.headers["x-access-token"]
+    : req.body.accessToken
+    ? req.body.accessToken
+    : req.params.accessToken;
+
+  User.findByPk(jwt.verify(accessToken, config.secret).id).then((user) => {
+    user.getRoles().then((roles) => {
       for (let i = 0; i < roles.length; i++) {
         if (roles[i].name === "candidat") {
           next();
@@ -52,7 +67,7 @@ isCandidat = (req, res, next) => {
       }
 
       res.status(403).send({
-        message: "Require Candidat Role!"
+        message: "Require Candidat Role!",
       });
     });
   });
