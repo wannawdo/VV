@@ -9,17 +9,21 @@
           <input
             v-model="poll.description"
             type="text"
-            placeholder="YourDescription..."
+            placeholder="Denumirea sesiunii de vot"
           />
         </div>
         <div class="poll-view__question">
-          <input v-model="poll.duration" type="number" placeholder="Days" />
+          <input
+            v-model="poll.duration"
+            type="number"
+            placeholder="Durata sesiunii de vot în minute"
+          />
         </div>
         <div class="poll-view__question">
           <input
             v-model="poll.question"
             type="text"
-            placeholder="Your Question..."
+            placeholder="Completați aici cu întrebarea"
           />
         </div>
         <div class="poll-view__answers">
@@ -30,7 +34,7 @@
             :style="{ zIndex: poll.answers.length - index }"
           >
             <input
-              :placeholder="'Answer ' + (index + 1)"
+              :placeholder="'Răspuns ' + (index + 1)"
               @focus="createNewInput(index)"
               v-model="poll.answers[index].answer"
               type="text"
@@ -58,8 +62,12 @@
       </div>
     </div>
 
-    <div v-if="success">
-      <p>Aici va fi codul de acces: {{ accessCode }}</p>
+    <div class="col-md-6-1" v-if="success">
+      <br />
+      <br />
+      <p class="codAcces">
+        CODUL DE ACCES: <strong> {{ accessCode }}</strong>
+      </p>
     </div>
   </div>
 </template>
@@ -82,13 +90,13 @@ export default {
   data() {
     return {
       poll: {
-        question: "Pune aici întrebarea",
-        duration: 20,
-        description: "Completeaza descrierea",
+        question: "",
+        duration: null,
+        description: "",
         answers: [
-          { answer: "Răspuns 1" },
-          { answer: "Răspuns 2" },
-          { answer: "Răspuns 3" },
+          { answer: "" },
+          { answer: "" },
+          { answer: "" },
           { answer: "" },
         ],
         multipleVotes: false,
@@ -181,8 +189,18 @@ export default {
       this.success = success;
       setTimeout(() => {
         this.success = null;
-      }, 10000);
+      }, 10000000);
     },
   },
 };
 </script>
+<style scoped>
+.codAcces {
+  text-align: center;
+  font-size: 30px;
+}
+.poll-view__info.success {
+  border-radius: 25px;
+  background-color: #b3cde0;
+}
+</style>

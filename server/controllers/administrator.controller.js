@@ -79,11 +79,11 @@ exports.setRole = async (req, res) => {
           {
             from: dbConfig.email_credentials.user,
             to: changing_user.email,
-            subject: "Activare candidatura",
+            subject: "Activare candidatură VV",
             text:
-              "Buna " +
+              "Bună " +
               changing_user.name +
-              ",\n\r Ai devenit candidat. Acum iti poti incarca candidatura.",
+              ",\n\rAi devenit candidat. Acum iți poți încărca candidatura în aplicația VV.",
           },
           function (error, response) {
             if (error) {
@@ -164,11 +164,11 @@ exports.activate = (req, res) => {
         {
           from: dbConfig.email_credentials.user,
           to: user.email,
-          subject: "Activare cont",
+          subject: "Activare cont VV",
           text:
-            "Buna, " +
+            "Bună " +
             user.name +
-            ",\n\r Contul tau a fost activat cu succes. Acum poti folosi aplicatia VV.",
+            ",\n\rContul tau a fost activat cu succes. Acum poti folosi aplicatia VV.",
         },
         function (error, response) {
           if (error) {
@@ -197,11 +197,11 @@ exports.activateAll = (req, res) => {
         {
           from: dbConfig.email_credentials.user,
           to: user.email,
-          subject: "Activare cont",
+          subject: "Activare cont VV",
           text:
-            "Buna, " +
+            "Bună " +
             user.name +
-            ",\n\r Contul tau a fost activat cu succes. Acum poti folosi aplicatia VV.",
+            ",\n\rContul tau a fost activat cu succes. Acum poti folosi aplicatia VV.",
         },
         function (error, response) {
           if (error) {

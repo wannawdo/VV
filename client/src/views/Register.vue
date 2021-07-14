@@ -20,6 +20,7 @@
               type="text"
               class="form-control"
               name="name"
+              placeholder="NUME PRENUME"
             />
             <div
               v-if="submitted && errors.has('username')"

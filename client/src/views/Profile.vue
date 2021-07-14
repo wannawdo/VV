@@ -186,40 +186,48 @@ export default {
   },
   methods: {
     submitRequest() {
-      const formData = new FormData();
-      formData.append("file", this.file);
-      formData.append(
-        "accessToken",
-        JSON.parse(window.localStorage.getItem("user")).accessToken
-      );
-      axios.post(
-        "http://" + window.location.hostname + ":8080/user/request",
-        formData
-      );
+      if (confirm("Sunteți sigur că doriți să trimiteți cererea?")) {
+        const formData = new FormData();
+        formData.append("file", this.file);
+        formData.append(
+          "accessToken",
+          JSON.parse(window.localStorage.getItem("user")).accessToken
+        );
+        axios.post(
+          "http://" + window.location.hostname + ":8080/user/request",
+          formData
+        );
+      }
     },
     submitChanges() {
-      axios
-        .post("http://" + window.location.hostname + ":8080/user/update", {
-          accessToken: JSON.parse(window.localStorage.getItem("user"))
-            .accessToken,
-          username: this.userFields.username,
-          password: this.userFields.password,
-          full_name: this.userFields.name,
-          email: this.userFields.email,
-        })
-        .then(() => {
-          this.$store.dispatch("auth/logout");
-          this.$router.push("/login");
-        });
+      if (confirm("Sunteți sigur că doriți să editați contul?")) {
+        axios
+          .post("http://" + window.location.hostname + ":8080/user/update", {
+            accessToken: JSON.parse(window.localStorage.getItem("user"))
+              .accessToken,
+            username: this.userFields.username,
+            password: this.userFields.password,
+            full_name: this.userFields.name,
+            email: this.userFields.email,
+          })
+          .then(() => {
+            this.$store.dispatch("auth/logout");
+            this.$router.push("/login");
+          });
+      }
     },
     editAccount() {
       this.showForm = true;
     },
     deleteAccount() {
-      if (confirm("Sunteti sigur ca doriti sa stergeti contul?")) {
+      if (confirm("Sunteți sigur că doriți să ștergeți contul?")) {
         axios
-          .delete("http://" + window.location.hostname + ":8080/user/" + JSON.parse(window.localStorage.getItem("user"))
-              .accessToken)
+          .delete(
+            "http://" +
+              window.location.hostname +
+              ":8080/user/" +
+              JSON.parse(window.localStorage.getItem("user")).accessToken
+          )
           .then(() => {
             this.$store.dispatch("auth/logout");
             this.$router.push("/login");

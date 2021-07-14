@@ -42,8 +42,8 @@
               <label for="name"><strong>Cod de acces</strong></label>
               <input
                 v-model="accessCode"
+                type="password"
                 v-validate="'required|min:3|max:20'"
-                type="text"
                 class="form-control"
                 name="name"
               />
@@ -103,7 +103,7 @@
           >
             <div v-if="success === true">Felicitări! Ai votat!</div>
             <div v-if="success === false">
-              Eroare! Votul nu a putut fi înregistrat!
+              Eroare! Votul nu a fost înregistrat!
             </div>
           </div>
         </div>
@@ -429,5 +429,20 @@ span {
   height: 50px;
   margin-top: 20px;
   text-shadow: 1px 1px;
+}
+.poll-view__info div {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background-color: #fff;
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  font-size: 20px;
+}
+.poll-view {
+  border-radius: 25px;
 }
 </style>

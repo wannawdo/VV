@@ -64,13 +64,15 @@ export default {
       this.content = html;
     },
     send() {
-      axios
-        .put("http://" + window.location.hostname + ":8080/candidaturi", {
-          text: this.content,
-          accessToken: JSON.parse(window.localStorage.getItem("user"))
-            .accessToken,
-        })
-        .then(() => {});
+      if (confirm("Sunteți sigur că doriți să trimiteți candidatura?")) {
+        axios
+          .put("http://" + window.location.hostname + ":8080/candidaturi", {
+            text: this.content,
+            accessToken: JSON.parse(window.localStorage.getItem("user"))
+              .accessToken,
+          })
+          .then(() => {});
+      }
     },
   },
   computed: {

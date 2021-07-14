@@ -10,7 +10,7 @@
         <input
           type="text"
           class="form-control"
-          placeholder="Caută după nume"
+          placeholder="Căutați un cont după nume"
           v-model="name"
         />
         <div class="input-group-append">
@@ -88,29 +88,34 @@
           v-if="currentUser && currentUser.requests.length"
         >
           <h3>Cereri</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Tip</th>
-                <th>Fișier</th>
-                <th>Acțiune</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(request, index) in currentUser.requests" :key="index">
-                <td>Candidat</td>
-                <td v-html="processLink(request.evidence)"></td>
-                <td>
-                  <a
-                    v-if="!request.status"
-                    href="#"
-                    @click="setRole(currentUser.id, request.id)"
-                    >Acceptă</a
-                  >
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="centrare">
+            <table>
+              <thead>
+                <tr>
+                  <th>Tip</th>
+                  <th>Fișier</th>
+                  <th>Acțiune</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="(request, index) in currentUser.requests"
+                  :key="index"
+                >
+                  <td>Candidat</td>
+                  <td v-html="processLink(request.evidence)"></td>
+                  <td>
+                    <a
+                      v-if="!request.status"
+                      href="#"
+                      @click="setRole(currentUser.id, request.id)"
+                      >Acceptă</a
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <div class="butoane">
           <div class="form-group-crearecont">
@@ -163,21 +168,23 @@ export default {
   },
   methods: {
     setRole(userId, requestId) {
-      axios
-        .put(
-          "http://" +
-            window.location.hostname +
-            ":8080/gestionareconturi/tip/" +
-            userId,
-          {
-            requestId: requestId,
-            accessToken: JSON.parse(window.localStorage.getItem("user"))
-              .accessToken,
-          }
-        )
-        .then(() => {
-          this.refreshList();
-        });
+      if (confirm("Acceptați ca votantul selectat să devină candidat?")) {
+        axios
+          .put(
+            "http://" +
+              window.location.hostname +
+              ":8080/gestionareconturi/tip/" +
+              userId,
+            {
+              requestId: requestId,
+              accessToken: JSON.parse(window.localStorage.getItem("user"))
+                .accessToken,
+            }
+          )
+          .then(() => {
+            this.refreshList();
+          });
+      }
     },
     processLink(file_name) {
       return (
@@ -214,9 +221,11 @@ export default {
     },
 
     deleteUser() {
-      AdministratorService.delete(this.currentUser.id).then(() => {
-        this.refreshList();
-      });
+      if (confirm("Sunteți sigur că doriți să ștergeți contul selectat?")) {
+        AdministratorService.delete(this.currentUser.id).then(() => {
+          this.refreshList();
+        });
+      }
     },
 
     acceptAllUsers() {
@@ -226,9 +235,13 @@ export default {
     },
 
     deleteAllUsers() {
-      AdministratorService.deleteAll().then(() => {
-        this.refreshList();
-      });
+      if (
+        confirm("Sunteți sigur că doriți să stergeti TOATE conturile inactive?")
+      ) {
+        AdministratorService.deleteAll().then(() => {
+          this.refreshList();
+        });
+      }
     },
 
     isUserActive() {
@@ -350,5 +363,20 @@ span {
   height: 50px;
   margin-top: 20px;
   text-shadow: 1px 1px;
+}
+table {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+.centrare {
+  margin: auto;
 }
 </style>

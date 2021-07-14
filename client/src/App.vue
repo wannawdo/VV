@@ -10,7 +10,7 @@
         </li>
         <li v-if="showAdministratorBoard" class="nav-item">
           <router-link to="/gestionareconturi" class="nav-link"
-            >Gestionare Conturi</router-link
+            >Gestionare conturi</router-link
           >
         </li>
         <li v-if="showCandidatBoard" class="nav-item">
@@ -20,7 +20,7 @@
         </li>
         <li class="nav-item">
           <router-link v-if="currentUser" to="/sesiunivot" class="nav-link"
-            >Sesiuni de vot</router-link
+            >O nouă sesiune de vot</router-link
           >
         </li>
         <li class="nav-item">
