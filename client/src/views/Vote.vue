@@ -63,7 +63,7 @@
                 v-show="loading"
                 class="spinner-border spinner-border-sm"
               ></span>
-              <span><strong>Acceseaza sesiunea</strong></span>
+              <span><strong>Accesează sesiunea</strong></span>
             </button>
           </div>
         </div>
@@ -196,8 +196,8 @@ export default {
   },
   methods: {
     accessSession() {
-      VoteService.get(this.currentSession.id, this.accessCode).then(
-        (response) => {
+      VoteService.get(this.currentSession.id, this.accessCode)
+        .then((response) => {
           this.totalVotes = 0;
           this.poll.id = this.currentSession.id;
           this.poll.question = response.data.description;
@@ -218,8 +218,10 @@ export default {
           this.loadedSession = true;
           this.result = response.data.userHasVoted;
           if (response.data.userHasVoted) this.calculateTotalVotes();
-        }
-      );
+        })
+        .catch(function() {
+          alert("Cod acces incorect");
+        });
     },
     setActiveSession(session, index) {
       this.loadedSession = false;
@@ -308,7 +310,7 @@ export default {
       setTimeout(() => {
         this.success = null;
         this.result = success;
-      }, 1500);
+      }, 1500000);
     },
     calculatePercent(votes) {
       return parseInt((10000 * votes) / this.totalVotes) / 100;

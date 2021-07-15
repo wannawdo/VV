@@ -74,42 +74,44 @@ exports.getVoteSessionsById = (req, res) => {
       accessCode: accessCode,
     },
   }).then((session) => {
-    console.log(session);
+    if (session) {
+      const itemTime = new Date(session.createdAt);
 
-    const itemTime = new Date(session.createdAt);
+      if (itemTime.getTime() + session.duration * 60 * 1000 < Date.now()) {
+        session.update({ ...session, status: 0 });
+      }
 
-    if (itemTime.getTime() + session.duration * 60 * 1000 < Date.now()) {
-      session.update({ ...session, status: 0 });
-    }
+      let userHasVoted = false;
 
-    let userHasVoted = false;
-
-    Vote.findOne({
-      where: {
-        sessionId: session.id,
-        userId: jwt.verify(accessToken, config.secret).id,
-      },
-    })
-      .then((user_vote) => {
-        if (user_vote) userHasVoted = true;
-        else userHasVoted = false;
-
-        votes = Vote.findAll({
-          attributes: ["option"],
-          where: {
-            sessionId: session.id,
-          },
-        }).then((votes) => {
-          session.options = session.options.split(";");
-          tempSession = JSON.parse(JSON.stringify(session));
-          tempSession.votes = votes;
-          tempSession.userHasVoted = userHasVoted;
-          res.status(200).send(tempSession);
-        });
+      Vote.findOne({
+        where: {
+          sessionId: session.id,
+          userId: jwt.verify(accessToken, config.secret).id,
+        },
       })
-      .catch((err) => {
-        res.status(403).send();
-      });
+        .then((user_vote) => {
+          if (user_vote) userHasVoted = true;
+          else userHasVoted = false;
+
+          votes = Vote.findAll({
+            attributes: ["option"],
+            where: {
+              sessionId: session.id,
+            },
+          }).then((votes) => {
+            session.options = session.options.split(";");
+            tempSession = JSON.parse(JSON.stringify(session));
+            tempSession.votes = votes;
+            tempSession.userHasVoted = userHasVoted;
+            res.status(200).send(tempSession);
+          });
+        })
+        .catch((err) => {
+          res.status(403).send();
+        });
+    } else {
+      res.status(403).send();
+    }
   });
 };
 

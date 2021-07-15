@@ -69,7 +69,7 @@ exports.setRole = async (req, res) => {
       if (changing_user) {
         const roles = await Role.findAll({
           where: {
-            name: "candidat",
+            name: req.params.rol,
           },
         });
         await changing_user.setRoles(roles);

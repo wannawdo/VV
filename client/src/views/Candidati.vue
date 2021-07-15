@@ -14,6 +14,13 @@
             {{ candidat.nume }}<span>{{ candidat.username }}</span>
           </h2>
           <p v-html="candidat.descriere"></p>
+          <a
+            href="#"
+            v-if="showAdministratorBoard()"
+            class="follow"
+            @click="deleteCandidatura(candidat.id)"
+            >Șterge candidatura</a
+          >
         </figcaption>
       </figure>
     </div>
@@ -32,16 +39,51 @@ export default {
     };
   },
   mounted() {
-    axios
-      .get("http://" + window.location.hostname + ":8080/candidaturi", {
-        headers: {
-          "x-access-token": JSON.parse(window.localStorage.getItem("user"))
-            .accessToken,
-        },
-      })
-      .then((data) => {
-        this.candidati = data.data;
-      });
+    this.loadData();
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
+  methods: {
+    loadData() {
+      axios
+        .get("http://" + window.location.hostname + ":8080/candidaturi", {
+          headers: {
+            "x-access-token": JSON.parse(window.localStorage.getItem("user"))
+              .accessToken,
+          },
+        })
+        .then((data) => {
+          this.candidati = data.data;
+        });
+    },
+    deleteCandidatura(id) {
+      if (confirm("Sunteți sigur că doriți să ștergeți candidatura?")) {
+        axios
+          .delete(
+            "http://" + window.location.hostname + ":8080/candidaturi/" + id,
+            {
+              headers: {
+                "x-access-token": JSON.parse(
+                  window.localStorage.getItem("user")
+                ).accessToken,
+              },
+            }
+          )
+          .then(() => {
+            this.loadData();
+          });
+      }
+    },
+    showAdministratorBoard() {
+      console.log(this.currentUser);
+      if (this.currentUser && this.currentUser.roles) {
+        return this.currentUser.roles.includes("ROLE = ADMINISTRATOR");
+      }
+      return false;
+    },
   },
 };
 </script>

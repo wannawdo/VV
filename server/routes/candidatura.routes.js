@@ -19,9 +19,21 @@ module.exports = function (app) {
     candidatura.findOne
   );
 
-  app.delete("/candidaturi/:id", candidatura.deleteOne);
+  app.delete(
+    "/candidaturi/:id",
+    [authJwt.verifyToken, authJwt.isAdministrator],
+    candidatura.deleteOne
+  );
 
-  app.delete("/candidaturi/all", candidatura.deleteAll);
+  app.delete(
+    "/candidaturi/all",
+    [authJwt.verifyToken, authJwt.isAdministrator],
+    candidatura.deleteAll
+  );
 
-  app.put("/candidaturi", candidatura.upsert);
+  app.put(
+    "/candidaturi",
+    [authJwt.verifyToken, authJwt.isCandidat],
+    candidatura.upsert
+  );
 };

@@ -21,9 +21,9 @@
               <a href="#" class="follow" @click="deleteAccount">Șterge cont</a>
             </div>
 
-            <div class="cb">
+            <div v-if="showVotantBoard()" class="cb">
               <label class="adauga-cerere" v-if="!checked"
-                ><center><strong>Doresc sa devin candidat:</strong></center>
+                ><center><strong>Doresc să devin candidat:</strong></center>
               </label>
               <input type="checkbox" id="checkbox" v-model="checked" />
               <label for="checkbox">
@@ -172,6 +172,7 @@ export default {
       return this.$store.state.auth.user;
     },
   },
+
   mounted() {
     if (!this.currentUser) {
       this.$router.push("/login");
@@ -215,6 +216,13 @@ export default {
             this.$router.push("/login");
           });
       }
+    },
+    showVotantBoard() {
+      console.log(this.currentUser);
+      if (this.currentUser && this.currentUser.roles) {
+        return this.currentUser.roles.includes("ROLE = VOTANT");
+      }
+      return false;
     },
     editAccount() {
       this.showForm = true;

@@ -18,7 +18,7 @@
             >Candidatura</router-link
           >
         </li>
-        <li class="nav-item">
+        <li v-if="showAdministratorBoard" class="nav-item">
           <router-link v-if="currentUser" to="/sesiunivot" class="nav-link"
             >O nouă sesiune de vot</router-link
           >
@@ -66,15 +66,18 @@
     <div class="container">
       <router-view />
     </div>
+    <br />
+    <br />
+
     <Footer />
   </div>
 </template>
 
 <script>
-//import Footer from "./views/Footer.vue";
+import Footer from "./views/Footer.vue";
 
 export default {
-  // components: { Footer },
+  components: { Footer },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;

@@ -61,7 +61,7 @@ module.exports = function (app) {
   );
 
   app.put(
-    "/gestionareconturi/tip/:id",
+    "/gestionareconturi/tip/:id/:rol",
     [authJwt.verifyToken, authJwt.isAdministrator],
     administrator.setRole
   );

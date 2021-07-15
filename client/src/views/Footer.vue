@@ -1,7 +1,7 @@
 <template>
   <footer id="footer">
     <div class="container">
-      <p>it-UL VA PUPA.</p>
+      <p>@Copyright Dragomirescu Oana 2021</p>
     </div>
     <div class="social">
       <a href="https://www.facebook.com/sisc.ase/" target="_blank">

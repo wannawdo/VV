@@ -43,7 +43,9 @@ class AdministratorService {
   }
 
   findAllByCondition(name) {
-    return http.get(`/gestionareconturi?name=${name}`);
+    return http.get(`/gestionareconturi?name=${name}`, {
+      headers: authHeader(),
+    });
   }
 }
 

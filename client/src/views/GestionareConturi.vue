@@ -108,8 +108,13 @@
                     <a
                       v-if="!request.status"
                       href="#"
-                      @click="setRole(currentUser.id, request.id)"
+                      @click="setRole(currentUser.id, request.id, 'candidat')"
                       >Acceptă</a
+                    >&nbsp;
+                    <a
+                      href="#"
+                      @click="setRole(currentUser.id, request.id, 'votant')"
+                      >Transformă în votant</a
                     >
                   </td>
                 </tr>
@@ -167,14 +172,22 @@ export default {
     };
   },
   methods: {
-    setRole(userId, requestId) {
-      if (confirm("Acceptați ca votantul selectat să devină candidat?")) {
+    setRole(userId, requestId, rol) {
+      if (
+        confirm(
+          rol == "candidat"
+            ? "Acceptați ca votantul selectat să devină candidat?"
+            : "Acceptați transformarea utilizatorului în votant?"
+        )
+      ) {
         axios
           .put(
             "http://" +
               window.location.hostname +
               ":8080/gestionareconturi/tip/" +
-              userId,
+              userId +
+              "/" +
+              rol,
             {
               requestId: requestId,
               accessToken: JSON.parse(window.localStorage.getItem("user"))
@@ -251,6 +264,7 @@ export default {
     setActiveUser(user, index) {
       this.currentUser = { ...user };
       this.currentIndex = index;
+      console.log(this.currentUser);
     },
     searchName() {
       AdministratorService.findAllByCondition(this.name)
