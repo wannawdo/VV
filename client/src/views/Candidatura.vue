@@ -1,30 +1,32 @@
 <template>
-  <div class="container">
-    <header class="jumbotronn">
-      <h3 class="info">
-        Adaugă candidatura
-      </h3>
-    </header>
-    <quill-editor
-      ref="myQuillEditor"
-      v-model="content"
-      :options="editorOption"
-      @blur="onEditorBlur($event)"
-      @focus="onEditorFocus($event)"
-      @ready="onEditorReady($event)"
-    />
+  <div class="paginaCandidatura">
+    <div class="container">
+      <header class="jumbotronn">
+        <h3 class="info">
+          Adaugă candidatura
+        </h3>
+      </header>
+      <quill-editor
+        ref="myQuillEditor"
+        v-model="content"
+        :options="editorOption"
+        @blur="onEditorBlur($event)"
+        @focus="onEditorFocus($event)"
+        @ready="onEditorReady($event)"
+      />
 
-    <!-- Or manually control the data synchronization -->
-    <!-- <quill-editor
+      <!-- Or manually control the data synchronization -->
+      <!-- <quill-editor
       :content="content"
       :options="editorOption"
       @change="onEditorChange($event)"
     /> -->
 
-    <div class="butonas">
-      <button class="btnnn btn-primary btn-block" @click="send">
-        <span><strong>Trimite candidatură</strong></span>
-      </button>
+      <div class="butonas">
+        <button class="btnnn btn-primary btn-block" @click="send">
+          <span><strong>Trimite candidatură</strong></span>
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -145,5 +147,8 @@ button {
   border-radius: 7px;
   border: 2px solid #011f4b;
   box-shadow: 5px 5px 7px #011f4b;
+}
+.paginaCandidatura {
+  min-height: 660px;
 }
 </style>

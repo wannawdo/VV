@@ -17,7 +17,7 @@
           <a
             href="#"
             v-if="showAdministratorBoard()"
-            class="follow"
+            class="followw"
             @click="deleteCandidatura(candidat.id)"
             >Șterge candidatura</a
           >
@@ -165,6 +165,12 @@ export default {
   margin-right: 4%;
   border-color: #2980b9;
   color: #2980b9;
+}
+.snip1336 .followw {
+  margin-right: 4%;
+  border-color: #2980b9;
+  color: #2980b9;
+  min-width: 260px;
 }
 .snip1336 h2 {
   margin: 0 0 5px;

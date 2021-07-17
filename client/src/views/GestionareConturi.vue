@@ -2,7 +2,7 @@
   <div class="pagina-gestionare-conturi">
     <header class="jumbotronn">
       <h3 class="info">
-        Informații despre cont
+        Informații despre conturi
       </h3>
     </header>
     <div class="list row">

@@ -203,4 +203,7 @@ export default {
   border-radius: 25px;
   background-color: #b3cde0;
 }
+.paginaSesiuneVotAdaugare {
+  min-height: 673px;
+}
 </style>

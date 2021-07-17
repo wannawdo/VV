@@ -1,107 +1,109 @@
 <template>
-  <div class="col-md-12">
-    <div class="card card-container">
-      <img
-        id="profile-img"
-        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-        class="profile-img-card"
-      />
-      <form
-        @submit.prevent="handleRegister"
-        enctype="multipart/form-data"
-        name="form"
-      >
-        <div v-if="!successful">
-          <div class="form-group">
-            <label for="name"><strong>Nume</strong></label>
-            <input
-              v-model="user.name"
-              v-validate="'required|min:3|max:20'"
-              type="text"
-              class="form-control"
-              name="name"
-              placeholder="NUME PRENUME"
-            />
-            <div
-              v-if="submitted && errors.has('username')"
-              class="alert-danger"
-            >
-              {{ errors.first("username") }}
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="username"><strong>Nume de utilizator</strong></label>
-            <input
-              v-model="user.username"
-              v-validate="'required|min:3|max:20'"
-              type="text"
-              class="form-control"
-              name="username"
-            />
-            <div
-              v-if="submitted && errors.has('username')"
-              class="alert-danger"
-            >
-              {{ errors.first("username") }}
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="email"><strong>Email</strong></label>
-            <input
-              v-model="user.email"
-              v-validate="'required|email|max:50'"
-              type="email"
-              class="form-control"
-              name="email"
-            />
-            <div v-if="submitted && errors.has('email')" class="alert-danger">
-              {{ errors.first("email") }}
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="password"><strong>Parolă</strong></label>
-            <input
-              v-model="user.password"
-              v-validate="'required|min:6|max:40'"
-              type="password"
-              class="form-control"
-              name="password"
-            />
-            <div
-              v-if="submitted && errors.has('password')"
-              class="alert-danger"
-            >
-              {{ errors.first("password") }}
-            </div>
-          </div>
-          <div class="cb">
-            <label class="adauga-cerere" v-if="!checked"
-              ><strong>Doresc sa devin administrator:</strong>
-            </label>
-            <input type="checkbox" id="checkbox" v-model="checked" />
-            <label for="checkbox">
-              <div class="field" v-if="checked">
-                <label for="file" class="label">
-                  <strong>Te rugăm să adaugi cererea aici:</strong></label
-                >
-                <input type="file" ref="file" @change="selectFile" />
+  <div class="paginaRegister">
+    <div class="col-md-12">
+      <div class="card card-container">
+        <img
+          id="profile-img"
+          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+          class="profile-img-card"
+        />
+        <form
+          @submit.prevent="handleRegister"
+          enctype="multipart/form-data"
+          name="form"
+        >
+          <div v-if="!successful">
+            <div class="form-group">
+              <label for="name"><strong>Nume</strong></label>
+              <input
+                v-model="user.name"
+                v-validate="'required|min:3|max:20'"
+                type="text"
+                class="form-control"
+                name="name"
+                placeholder="NUME PRENUME"
+              />
+              <div
+                v-if="submitted && errors.has('username')"
+                class="alert-danger"
+              >
+                {{ errors.first("username") }}
               </div>
-            </label>
+            </div>
+            <div class="form-group">
+              <label for="username"><strong>Nume de utilizator</strong></label>
+              <input
+                v-model="user.username"
+                v-validate="'required|min:3|max:20'"
+                type="text"
+                class="form-control"
+                name="username"
+              />
+              <div
+                v-if="submitted && errors.has('username')"
+                class="alert-danger"
+              >
+                {{ errors.first("username") }}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email"><strong>Email</strong></label>
+              <input
+                v-model="user.email"
+                v-validate="'required|email|max:50'"
+                type="email"
+                class="form-control"
+                name="email"
+              />
+              <div v-if="submitted && errors.has('email')" class="alert-danger">
+                {{ errors.first("email") }}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password"><strong>Parolă</strong></label>
+              <input
+                v-model="user.password"
+                v-validate="'required|min:6|max:40'"
+                type="password"
+                class="form-control"
+                name="password"
+              />
+              <div
+                v-if="submitted && errors.has('password')"
+                class="alert-danger"
+              >
+                {{ errors.first("password") }}
+              </div>
+            </div>
+            <div class="cb">
+              <label class="adauga-cerere" v-if="!checked"
+                ><strong>Doresc sa devin administrator:</strong>
+              </label>
+              <input type="checkbox" id="checkbox" v-model="checked" />
+              <label for="checkbox">
+                <div class="field" v-if="checked">
+                  <label for="file" class="label">
+                    <strong>Te rugăm să adaugi cererea aici:</strong></label
+                  >
+                  <input type="file" ref="file" @change="selectFile" />
+                </div>
+              </label>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary btn-block">
+                <strong>Creează cont</strong>
+              </button>
+            </div>
           </div>
-          <div class="form-group">
-            <button class="btn btn-primary btn-block">
-              <strong>Creează cont</strong>
-            </button>
-          </div>
-        </div>
-      </form>
+        </form>
 
-      <div
-        v-if="message"
-        class="alert"
-        :class="successful ? 'alert-success' : 'alert-danger'"
-      >
-        {{ message }}
+        <div
+          v-if="message"
+          class="alert"
+          :class="successful ? 'alert-success' : 'alert-danger'"
+        >
+          {{ message }}
+        </div>
       </div>
     </div>
   </div>
@@ -251,5 +253,8 @@ justify-content:left;
   border-radius: 25px;
   border: 2px solid #011f4b;
   box-shadow: 7px 10px 10px #011f4b;
+}
+.paginaRegister {
+  min-height: 660px;
 }
 </style>

@@ -310,7 +310,7 @@ export default {
       setTimeout(() => {
         this.success = null;
         this.result = success;
-      }, 1500000);
+      }, 1500);
     },
     calculatePercent(votes) {
       return parseInt((10000 * votes) / this.totalVotes) / 100;
@@ -443,8 +443,15 @@ span {
   width: 150px;
   height: 150px;
   font-size: 20px;
+  line-height: 1.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .poll-view {
   border-radius: 25px;
+}
+.paginaVot {
+  min-height: 675px;
 }
 </style>
