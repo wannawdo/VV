@@ -1,7 +1,7 @@
 module.exports = {
   email_credentials: {
-    user: "dragomirescuoana18@stud.ase.ro",
-    pass: "EF5a6f71f1",
+    user: "email",
+    pass: "parola",
   },
   HOST: "localhost",
   USER: "vvuser",
