@@ -1,1 +1,1 @@
-# VV-2
+# VV - Vue.js + Node.js Vote Application for an Organisation
